@@ -1,0 +1,240 @@
+Converting GML script: ${project_dir}\scripts\test_case\test_case.gml
+Converted description /// @description test_case(got, [expected])/// @param got
+/// @param [expected]
+
+Converting GML script: ${project_dir}\scripts\test_case_no_trigger\test_case_no_trigger.gml
+Converted description /// @description test_case_no_trigger(assert, [msg])/// @param assert
+/// @param [msg]
+
+Converting GML script: ${project_dir}\scripts\test_case_trigger\test_case_trigger.gml
+Converted description /// @description test_case_trigger(assert, [msg])/// @param assert
+/// @param [msg]
+
+Converting GML script: ${project_dir}\scripts\test_fixture_array\test_fixture_array.gml
+Converted description /// @description test_fixture_array(...)/// @param ...
+
+Converting GML script: ${project_dir}\scripts\test_fixture_array2\test_fixture_array2.gml
+Converted description /// @description test_fixture_array2(row_width, ...)/// @param row_width
+/// @param ...
+
+Converting GML script: ${project_dir}\scripts\test_fixture_list\test_fixture_list.gml
+Converted description /// @description test_fixture_list(...)/// @param ...
+
+Converting GML script: ${project_dir}\scripts\test_fixture_greater_than\test_fixture_greater_than.gml
+Converted description /// @description test_fixture_greater_than(a, b)/// @param a
+/// @param b
+
+Converting GML script: ${project_dir}\scripts\gma_test_all\gma_test_all.gml
+Converted builtin - line 31: background_colour = c_green -> __background_set_colour( c_green )
+Converted builtin - line 34: background_colour = c_red -> __background_set_colour( c_red )
+Converted description /// @description gma_test_all()
+
+Converting GML script: ${project_dir}\scripts\__gma_test_debug_value__\__gma_test_debug_value__.gml
+Converted string - line 5: '(undefined)' -> "(undefined)"
+Converted string - line 8: '(number)' -> "(number)"
+Converted string - line 8: '7' -> "7"
+Converted string - line 9: '(number)' -> "(number)"
+Converted string - line 9: '-3.52' -> "-3.52"
+Converted string - line 12: '(string)' -> "(string)"
+Converted string - line 12: '""' -> "\"\""
+Converted string - line 13: '(string)' -> "(string)"
+Converted string - line 13: '"waahoo"' -> "\"waahoo\""
+Converted string - line 14: 'this is "waahoo"' -> "this is \"waahoo\""
+Converted string - line 14: '(string)' -> "(string)"
+Converted string - line 14: '"this is ""waahoo"""' -> "\"this is \"\"waahoo\"\"\""
+Converted string - line 18: '(array)' -> "(array)"
+Converted string - line 18: '[5, 6, 7]' -> "[5, 6, 7]"
+Converted string - line 22: '(array)' -> "(array)"
+Converted string - line 22: '[5, "a"; "b", 7]' -> "[5, \"a\"; \"b\", 7]"
+Converted string - line 29: 'list(<INVALID>)' -> "list(<INVALID>)"
+Converted string - line 30: 'list()' -> "list()"
+Converted string - line 31: 'list(3, "waahoo", [5, 6, 7])' -> "list(3, \"waahoo\", [5, 6, 7])"
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_assert_error__(message, expected, got)/// @param message
+/// @param expected
+/// @param got
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_assert_error_simple__(message, got)/// @param message
+/// @param got
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_assert_error_raw__(message, expected, got)/// @param message
+/// @param expected
+/// @param got
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_debug_value__(val, [noprefix])/// @param val
+/// @param [noprefix]
+Converted string - line 41: '"' -> "\""
+Converted string - line 41: '"' -> "\""
+Converted string - line 41: '""' -> "\"\""
+Converted string - line 41: '"' -> "\""
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_debug_list_value__(val)/// @param val
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_equal__(got, expected)/// @param got
+/// @param expected
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_equalish__(got, expected)/// @param got
+/// @param expected
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_greater_than__(got, expected)/// @param got
+/// @param expected
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_less_than__(got, expected)/// @param got
+/// @param expected
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_greater_than_or_equal__(got, expected)/// @param got
+/// @param expected
+
+Converting GML script: GMAssert.gml
+Converted description /// @description __gma_less_than_or_equal__(got, expected)/// @param got
+/// @param expected
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_fail(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_operation(got, expected, op, invert, [msg], [debug_got], [debug_expected])/// @param got
+/// @param expected
+/// @param op
+/// @param invert
+/// @param [msg]
+/// @param [debug_got]
+/// @param [debug_expected]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_equal(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_equalish(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_is(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_not_equal(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_not_equalish(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_isnt(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_greater_than(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_less_than(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_greater_than_or_equal(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_less_than_or_equal(got, expected, [msg])/// @param got
+/// @param expected
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_is_string(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_is_real(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_is_array(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_is_defined(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_isnt_string(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_isnt_real(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_isnt_array(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_isnt_defined(got, [msg])/// @param got
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_in_range(got, lower, upper, [msg])/// @param got
+/// @param lower
+/// @param upper
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_not_in_range(got, lower, upper, [msg])/// @param got
+/// @param lower
+/// @param upper
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_contains(got, content, [msg]);/// @param got
+/// @param content
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_contains_exact(got, content, [msg]);/// @param got
+/// @param content
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_doesnt_contain(got, content, [msg]);/// @param got
+/// @param content
+/// @param [msg]
+
+Converting GML script: GMAssert.gml
+Converted description /// @description assert_doesnt_contain_exact(got, content, [msg]);/// @param got
+/// @param content
+/// @param [msg]
+
+macOS icon ${options_dir}\mac\icons\icon512.png written out as 32-bit
+Windows NSIS Installer Script has been set to default due to changes in GameMaker Studio 2
+Game speed set to 30
+Added compatibility script 'background/__background_set_colour.gml'
+Added compatibility script 'background/__init_background.gml'
+Added compatibility script '__init_global.gml'
+Added compatibility script 'background/__background_get_colour_element.gml'
+Added compatibility script 'background/__background_set_element.gml'
