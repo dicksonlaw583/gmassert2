@@ -1,8 +1,12 @@
 {
-    "id": "b3faeeee-4325-4a73-b9e1-eb61b4a9c819",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "test_case",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "gmassert_test",
+    "path": "folders/Scripts/gmassert_test.yy",
+  },
+  "resourceType": "GMScript",
+  "name": "test_case",
+  "tags": [],
+  "resourceVersion": "1.0",
 }
