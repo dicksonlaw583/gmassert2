@@ -4,8 +4,6 @@
     {"id":{"name":"test_case","path":"scripts/test_case/test_case.yy",},"order":0,},
     {"id":{"name":"test_case_no_trigger","path":"scripts/test_case_no_trigger/test_case_no_trigger.yy",},"order":1,},
     {"id":{"name":"test_case_trigger","path":"scripts/test_case_trigger/test_case_trigger.yy",},"order":2,},
-    {"id":{"name":"test_fixture_array","path":"scripts/test_fixture_array/test_fixture_array.yy",},"order":3,},
-    {"id":{"name":"test_fixture_array2","path":"scripts/test_fixture_array2/test_fixture_array2.yy",},"order":4,},
     {"id":{"name":"test_fixture_list","path":"scripts/test_fixture_list/test_fixture_list.yy",},"order":5,},
     {"id":{"name":"test_fixture_greater_than","path":"scripts/test_fixture_greater_than/test_fixture_greater_than.yy",},"order":6,},
     {"id":{"name":"gma_test_all","path":"scripts/gma_test_all/gma_test_all.yy",},"order":7,},
