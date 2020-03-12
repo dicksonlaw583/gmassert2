@@ -64,7 +64,13 @@
   switch (type) {
     case "number":
       //Return integers as-is
-      if (frac(argument[0]) == 0) {
+      if (is_infinity(argument[0])) {
+        dv = (argument[0] < 0) ? "-infinity" : "infinity";
+      }
+      else if (is_nan(argument[0])) {
+        dv = "NaN";
+      }
+      else if (frac(argument[0]) == 0) {
         dv = string(argument[0]);
       }
       //Get mantissa and exponent
@@ -95,62 +101,93 @@
       }
     break;
     case "string":
-      dv = "\"" + string_replace_all(argument[0], "\"", "\"\"") + "\"";
+      var str = string_replace_all(argument[0], "\\", "\\\\");
+      str = string_replace_all(str, "\"", "\\\"");
+      str = string_replace_all(str, "\n", "\\n");
+      str = string_replace_all(str, "\r", "\\r");
+      str = string_replace_all(str, "\t", "\\t");
+      str = string_replace_all(str, "\f", "\\f");
+      str = string_replace_all(str, "\b", "\\b");
+      str = string_replace_all(str, "\v", "\\v");
+      str = string_replace_all(str, "\a", "\\a");
+      dv = "\"" + str + "\"";
     break;
     case "array":
-      var size;
       var result = "",
           arr = argument[0],
-          height = array_height_2d(arr);
-      //1D
-      if (height == 1) {
-        size = array_length_1d(arr)
-        for (var i = 0; i < size; i++) {
-          result += __gma_debug_value__(arr[i], true);
-          if (i < size-1) {
-            result += ", ";
-          }
-        }
-      }
-      //2D
-      else {
-        for (var i = 0; i < height; i++) {
-          size = array_length_2d(arr, i);
-          for (var j = 0; j < size; j++) {
-            result += __gma_debug_value__(arr[i, j], true);
-            if (j < size-1) {
-              result += ", ";
-            }
-          }
-          if (i < height-1) {
-            result += "; ";
-          }
+					size = array_length(arr);
+      for (var i = 0; i < size; i++) {
+        result += __gma_debug_value__(arr[i], true);
+        if (i < size-1) {
+          result += ", ";
         }
       }
       dv = "[" + result + "]";
     break;
+    case "struct":
+      var openBracket, closeBracket;
+      var structType = instanceof(argument[0]);
+      var result = "";
+      if (structType == "struct") {
+        openBracket = "{";
+        closeBracket = "}";
+      } else {
+        openBracket = structType + "({";
+        closeBracket = "})";
+      }
+      var properties = variable_struct_get_names(argument[0]);
+      var size = array_length(properties);
+      var gotFirst = false;
+      for (var i = 0; i < size; i++) {
+        var propertyValue = variable_struct_get(argument[0], properties[i]);
+        if (is_method(propertyValue)) continue;
+        if (gotFirst) {
+          result += ", ";
+        } else {
+          gotFirst = true;
+        }
+        result += properties[i] + ": " + __gma_debug_value__(propertyValue, true);
+      }
+      dv = openBracket + result + closeBracket;
+    break;
     case "bool":
       if (argument[0]) {
-        dv = "true";
+        dv = "bool(true)";
       } else {
-        dv = "false";
+        dv = "bool(false)";
       }
     break;
     case "int32":
     case "int64":
+      dv = type + "(" + string(argument[0]) + ")";
+    break;
     case "ptr":
-      dv = string(argument[0]);
+      var hexchars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+      var hex = "";
+      var ptrval = int64(argument[0]);
+      do {
+        hex = hexchars[ptrval & $F] + hex;
+        ptrval = ptrval >> 4;
+      } until (ptrval == 0);
+      dv = "ptr($" + hex + ")";
     break;
     case "undefined":
+      dv = "undefined";
+    break;
+    case "method":
+      dv = "function(){...}";
+    break;
     case "null":
+      dv = "null";
+    break;
     case "unknown":
-      dv = "";
+      dv = "???";
     break;
     case "vec3":
-      dv = string(argument[0]);
+      dv = "vec3(" + string(argument[0]) + ")";
     break;
     case "vec4":
-      dv = string(argument[0]);
+      dv = "vec4(" + string(argument[0]) + ")";
     break;
   }
   if (argument_count > 1 && argument[1]) {
@@ -179,6 +216,81 @@
   return "list(" + content + ")";
 }
 
+#define __gma_debug_grid_value__
+/// @function __gma_debug_grid_value__(val)
+/// @param val The value to derive a debug-friendly value from
+{
+  //Return grid(<INVALID>) if it does not exist
+  if (!ds_exists(argument0, ds_type_grid)) {
+    return "grid(<INVALID>)";
+  }
+  //Return grid(a, b, c; d, e, f; ...)
+  var content = "";
+  var width = ds_grid_width(argument0);
+  var height = ds_grid_height(argument0);
+  for (var yy = 0; yy < height; ++yy) {
+    if (yy > 0) content += "; ";
+    for (var xx = 0; xx < width; ++xx) {
+      if (xx > 0) content += ", ";
+      content += __gma_debug_value__(argument0[# xx, yy], true);
+    }
+  }
+  return "grid(" + content + ")";
+}
+
+#define __gma_debug_map_value__
+/// @function __gma_debug_map_value__(val)
+/// @param val The value to derive a debug-friendly value from
+{
+  //Return map(<INVALID>) if it does not exist
+  if (!ds_exists(argument0, ds_type_map)) {
+    return "map(<INVALID>)";
+  }
+  //Return map(key0: value0, key1: value1, ..., keyN: valueN) if it exists
+  var content = "";
+  var firstEntry = true;
+  for (var k = ds_map_find_first(argument0); !is_undefined(k); k = ds_map_find_next(argument0, k)) {
+    if (firstEntry) {
+      firstEntry = false;
+    } else {
+      content += ", ";
+    }
+    content += __gma_debug_value__(k, true) + ": " + __gma_debug_value__(argument0[? k], true);
+  }
+  return "map(" + content + ")";
+}
+
+#define __gma_debug_struct_value__
+/// @function __gma_debug_struct_value__(val)
+/// @param val The value to derive a debug-friendly value from
+/// @description Return a detailed debug value of the given struct, including methods (which __gma_debug_value__ omits)
+{
+  //Fall back to __gma_debug_value__ if not a struct
+  if (!is_struct(argument0)) return __gma_debug_value__(argument0, true);
+  //Determine correct opening and closing
+  var openBracket, closeBracket;
+  var structType = instanceof(argument[0]);
+  if (structType == "struct") {
+    openBracket = "{";
+    closeBracket = "}";
+  } else {
+    openBracket = structType + "({";
+    closeBracket = "})";
+  }
+  //Grab properties
+  var properties = variable_struct_get_names(argument[0]);
+  var size = array_length(properties);
+  var result = "";
+  for (var i = 0; i < size; i++) {
+    if (i > 0) {
+      result += ", ";
+    }
+    result += properties[i] + ": " + __gma_debug_value__(variable_struct_get(argument[0], properties[i]), true);
+  }
+  //Return combined result
+  return openBracket + result + closeBracket;
+}
+
 #define __gma_equal__
 /// @function __gma_equal__(got, expected)
 /// @param got The actual received value for the assertion
@@ -188,27 +300,20 @@
   if (type == typeof(argument1)) {
     switch (type) {
       case "array":
-        var a1d = array_height_2d(argument0) == 1,
-            b1d = array_height_2d(argument1) == 1;
-        if (a1d != b1d) return false;
-        if (a1d) {
-          var size = array_length_1d(argument0);
-          if (size != array_length_1d(argument1)) return false;
-          for (var i = 0; i < size; i++) {
-            if (!__gma_equal__(argument0[@ i], argument1[@ i])) return false;
-          }
+        var size = array_length(argument0);
+        if (size != array_length(argument1)) return false;
+        for (var i = 0; i < size; i++) {
+          if (!__gma_equal__(argument0[@ i], argument1[@ i])) return false;
         }
-        else {
-          var size_i = array_height_2d(argument0);
-          if (size_i != array_height_2d(argument1)) return false;
-          var size_j;
-          for (var i = 0; i < size_i; i++) {
-            size_j = array_length_2d(argument0, i);
-            if (size_j != array_length_2d(argument1, i)) return false;
-            for (var j = 0; j < size_j; j++) {
-              if (!__gma_equal__(argument0[@ i, j], argument1[@ i, j])) return false;
-            }
-          }
+        return true;
+      break;
+      case "struct":
+        var size = variable_struct_names_count(argument0);
+        if (size != variable_struct_names_count(argument1)) return false;
+        var kn = variable_struct_get_names(argument0);
+        for (var i = 0; i < size; ++i) {
+          var k = kn[i];
+          if (!variable_struct_exists(argument1, k) || !__gma_equal__(variable_struct_get(argument0, k), variable_struct_get(argument1, k))) return false;
         }
         return true;
       break;
@@ -231,27 +336,20 @@
   if (type == typeof(argument1)) {
     switch (type) {
       case "array":
-        var a1d = array_height_2d(argument0) == 1,
-            b1d = array_height_2d(argument1) == 1;
-        if (a1d != b1d) return false;
-        if (a1d) {
-          var size = array_length_1d(argument0);
-          if (size != array_length_1d(argument1)) return false;
-          for (var i = 0; i < size; i++) {
-            if (!__gma_equalish__(argument0[@ i], argument1[@ i])) return false;
-          }
+        var size = array_length(argument0);
+        if (size != array_length(argument1)) return false;
+        for (var i = 0; i < size; i++) {
+          if (!__gma_equalish__(argument0[@ i], argument1[@ i])) return false;
         }
-        else {
-          var size_i = array_height_2d(argument0);
-          if (size_i != array_height_2d(argument1)) return false;
-          var size_j;
-          for (var i = 0; i < size_i; i++) {
-            size_j = array_length_2d(argument0, i);
-            if (size_j != array_length_2d(argument1, i)) return false;
-            for (var j = 0; j < size_j; j++) {
-              if (!__gma_equalish__(argument0[@ i, j], argument1[@ i, j])) return false;
-            }
-          }
+        return true;
+      break;
+      case "struct":
+        var size = variable_struct_names_count(argument0);
+        if (size != variable_struct_names_count(argument1)) return false;
+        var kn = variable_struct_get_names(argument0);
+        for (var i = 0; i < size; ++i) {
+          var k = kn[i];
+          if (!variable_struct_exists(argument1, k) || !__gma_equalish__(variable_struct_get(argument0, k), variable_struct_get(argument1, k))) return false;
         }
         return true;
       break;
@@ -295,27 +393,20 @@
         return len0 > len1;
       break;
       case "array":
-        var a1d = array_height_2d(argument0) == 1,
-            b1d = array_height_2d(argument1) == 1;
-        if (a1d != b1d) return false;
-        if (a1d) {
-          var size = array_length_1d(argument0);
-          if (size != array_length_1d(argument1)) return false;
-          for (var i = 0; i < size; i++) {
-            if (!__gma_greater_than__(argument0[@ i], argument1[@ i])) return false;
-          }
+        var size = array_length(argument0);
+        if (size != array_length(argument1)) return false;
+        for (var i = 0; i < size; i++) {
+          if (!__gma_greater_than__(argument0[@ i], argument1[@ i])) return false;
         }
-        else {
-          var size_i = array_height_2d(argument0);
-          if (size_i != array_height_2d(argument1)) return false;
-          var size_j;
-          for (var i = 0; i < size_i; i++) {
-            size_j = array_length_2d(argument0, i);
-            if (size_j != array_length_2d(argument1, i)) return false;
-            for (var j = 0; j < size_j; j++) {
-              if (!__gma_greater_than__(argument0[@ i, j], argument1[@ i, j])) return false;
-            }
-          }
+        return true;
+      break;
+      case "struct":
+        var size = variable_struct_names_count(argument0);
+        if (size != variable_struct_names_count(argument1)) return false;
+        var kn = variable_struct_get_names(argument0);
+        for (var i = 0; i < size; ++i) {
+          var k = kn[i];
+          if (!variable_struct_exists(argument1, k) || !__gma_greater_than__(variable_struct_get(argument0, k), variable_struct_get(argument1, k))) return false;
         }
         return true;
       break;
@@ -356,27 +447,20 @@
         return len0 < len1;
       break;
       case "array":
-        var a1d = array_height_2d(argument0) == 1,
-            b1d = array_height_2d(argument1) == 1;
-        if (a1d != b1d) return false;
-        if (a1d) {
-          var size = array_length_1d(argument0);
-          if (size != array_length_1d(argument1)) return false;
-          for (var i = 0; i < size; i++) {
-            if (!__gma_less_than__(argument0[@ i], argument1[@ i])) return false;
-          }
+        var size = array_length(argument0);
+        if (size != array_length(argument1)) return false;
+        for (var i = 0; i < size; i++) {
+          if (!__gma_less_than__(argument0[@ i], argument1[@ i])) return false;
         }
-        else {
-          var size_i = array_height_2d(argument0);
-          if (size_i != array_height_2d(argument1)) return false;
-          var size_j;
-          for (var i = 0; i < size_i; i++) {
-            size_j = array_length_2d(argument0, i);
-            if (size_j != array_length_2d(argument1, i)) return false;
-            for (var j = 0; j < size_j; j++) {
-              if (!__gma_less_than__(argument0[@ i, j], argument1[@ i, j])) return false;
-            }
-          }
+        return true;
+      break;
+      case "struct":
+        var size = variable_struct_names_count(argument0);
+        if (size != variable_struct_names_count(argument1)) return false;
+        var kn = variable_struct_get_names(argument0);
+        for (var i = 0; i < size; ++i) {
+          var k = kn[i];
+          if (!variable_struct_exists(argument1, k) || !__gma_less_than__(variable_struct_get(argument0, k), variable_struct_get(argument1, k))) return false;
         }
         return true;
       break;
@@ -417,27 +501,20 @@
         return len0 > len1;
       break;
       case "array":
-        var a1d = array_height_2d(argument0) == 1,
-            b1d = array_height_2d(argument1) == 1;
-        if (a1d != b1d) return false;
-        if (a1d) {
-          var size = array_length_1d(argument0);
-          if (size != array_length_1d(argument1)) return false;
-          for (var i = 0; i < size; i++) {
-            if (!__gma_greater_than_or_equal__(argument0[@ i], argument1[@ i])) return false;
-          }
+        var size = array_length(argument0);
+        if (size != array_length(argument1)) return false;
+        for (var i = 0; i < size; i++) {
+          if (!__gma_greater_than_or_equal__(argument0[@ i], argument1[@ i])) return false;
         }
-        else {
-          var size_i = array_height_2d(argument0);
-          if (size_i != array_height_2d(argument1)) return false;
-          var size_j;
-          for (var i = 0; i < size_i; i++) {
-            size_j = array_length_2d(argument0, i);
-            if (size_j != array_length_2d(argument1, i)) return false;
-            for (var j = 0; j < size_j; j++) {
-              if (!__gma_greater_than_or_equal__(argument0[@ i, j], argument1[@ i, j])) return false;
-            }
-          }
+        return true;
+      break;
+      case "struct":
+        var size = variable_struct_names_count(argument0);
+        if (size != variable_struct_names_count(argument1)) return false;
+        var kn = variable_struct_get_names(argument0);
+        for (var i = 0; i < size; ++i) {
+          var k = kn[i];
+          if (!variable_struct_exists(argument1, k) || !__gma_greater_than_or_equal__(variable_struct_get(argument0, k), variable_struct_get(argument1, k))) return false;
         }
         return true;
       break;
@@ -478,27 +555,20 @@
         return len0 < len1;
       break;
       case "array":
-        var a1d = array_height_2d(argument0) == 1,
-            b1d = array_height_2d(argument1) == 1;
-        if (a1d != b1d) return false;
-        if (a1d) {
-          var size = array_length_1d(argument0);
-          if (size != array_length_1d(argument1)) return false;
-          for (var i = 0; i < size; i++) {
-            if (!__gma_less_than_or_equal__(argument0[@ i], argument1[@ i])) return false;
-          }
+        var size = array_length(argument0);
+        if (size != array_length(argument1)) return false;
+        for (var i = 0; i < size; i++) {
+          if (!__gma_less_than_or_equal__(argument0[@ i], argument1[@ i])) return false;
         }
-        else {
-          var size_i = array_height_2d(argument0);
-          if (size_i != array_height_2d(argument1)) return false;
-          var size_j;
-          for (var i = 0; i < size_i; i++) {
-            size_j = array_length_2d(argument0, i);
-            if (size_j != array_length_2d(argument1, i)) return false;
-            for (var j = 0; j < size_j; j++) {
-              if (!__gma_less_than_or_equal__(argument0[@ i, j], argument1[@ i, j])) return false;
-            }
-          }
+        return true;
+      break;
+      case "struct":
+        var size = variable_struct_names_count(argument0);
+        if (size != variable_struct_names_count(argument1)) return false;
+        var kn = variable_struct_get_names(argument0);
+        for (var i = 0; i < size; ++i) {
+          var k = kn[i];
+          if (!variable_struct_exists(argument1, k) || !__gma_less_than_or_equal__(variable_struct_get(argument0, k), variable_struct_get(argument1, k))) return false;
         }
         return true;
       break;
@@ -1038,6 +1108,32 @@
   }
 }
 
+#define assert_is_undefined
+/// @function assert_is_undefined(got, [msg])
+/// @param got The actual received value for the assertion
+/// @param [msg] (optional) A custom message to display when the assertion fails
+/// @description Assert that the gotten expression is undefined.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 1:
+      msg = "Undefined type assertion failed!";
+    break;
+    case 2:
+      msg = argument[1];
+    break;
+    default:
+      show_error("Expected 1 or 2 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (!is_undefined(argument[0])) {
+    __gma_assert_error_raw__(msg, "undefined", __gma_debug_value__(argument[0]));
+  }
+}
+
 #define assert_isnt_string
 /// @function assert_isnt_string(got, [msg])
 /// @param got The actual received value for the assertion
@@ -1139,6 +1235,32 @@
   //Check assertion
   if (!is_undefined(argument[0])) {
     __gma_assert_error_raw__(msg, "undefined", __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_isnt_undefined
+/// @function assert_isnt_undefined(got, [msg])
+/// @param got The actual received value for the assertion
+/// @param [msg] (optional) A custom message to display when the assertion fails
+/// @description Assert that the gotten expression is not undefined.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 1:
+      msg = "Defined type assertion failed!";
+    break;
+    case 2:
+      msg = argument[1];
+    break;
+    default:
+      show_error("Expected 1 or 2 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (is_undefined(argument[0])) {
+    __gma_assert_error_raw__(msg, "Anything but undefined", __gma_debug_value__(argument[0]));
   }
 }
 
@@ -1319,25 +1441,11 @@
     break;
     case "array":
       var arr = argument[0];
-      if (array_height_2d(arr) == 1 || array_length_2d(arr, 1) == 0) {
-        var size = array_length_1d(arr);
-        for (var i = 0; i < size; i++) {
-          if (__gma_equal__(argument[1], arr[i])) {
-            found = true;
-            break;
-          }
-        }
-      }
-      else {
-        var size_i = array_height_2d(arr);
-        for (var i = 0; i < size_i && !found; i++) {
-          var size_j = array_length_2d(arr, i);
-          for (var j = 0; j < size_j; j++) {
-            if (__gma_equal__(argument[1], arr[i, j])) {
-              found = true;
-              break;
-            }
-          }
+      var size = array_length(arr);
+      for (var i = 0; i < size; i++) {
+        if (__gma_equal__(argument[1], arr[i])) {
+          found = true;
+          break;
         }
       }
       if (!found) {
@@ -1407,25 +1515,11 @@
     break;
     case "array":
       var arr = argument[0];
-      if (array_height_2d(arr) == 1 || array_length_2d(arr, 1) == 0) {
-        var size = array_length_1d(arr);
-        for (var i = 0; i < size; i++) {
-          if (typeof(argument[1]) == typeof(arr[i]) && argument[1] == arr[i]) {
-            found = true;
-            break;
-          }
-        }
-      }
-      else {
-        var size_i = array_height_2d(arr);
-        for (var i = 0; i < size_i && !found; i++) {
-          var size_j = array_length_2d(arr, i);
-          for (var j = 0; j < size_j; j++) {
-            if (typeof(argument[1]) == typeof(arr[i, j]) && argument[1] == arr[i, j]) {
-              found = true;
-              break;
-            }
-          }
+      var size = array_length(arr);
+      for (var i = 0; i < size; i++) {
+        if (typeof(argument[1]) == typeof(arr[i]) && argument[1] == arr[i]) {
+          found = true;
+          break;
         }
       }
       if (!found) {
@@ -1495,25 +1589,11 @@
     break;
     case "array":
       var arr = argument[0];
-      if (array_height_2d(arr) == 1 || array_length_2d(arr, 1) == 0) {
-        var size = array_length_1d(arr);
-        for (var i = 0; i < size; i++) {
-          if (__gma_equal__(argument[1], arr[i])) {
-            found = true;
-            break;
-          }
-        }
-      }
-      else {
-        var size_i = array_height_2d(arr);
-        for (var i = 0; i < size_i && !found; i++) {
-          var size_j = array_length_2d(arr, i);
-          for (var j = 0; j < size_j; j++) {
-            if (__gma_equal__(argument[1], arr[i, j])) {
-              found = true;
-              break;
-            }
-          }
+      var size = array_length(arr);
+      for (var i = 0; i < size; i++) {
+        if (__gma_equal__(argument[1], arr[i])) {
+          found = true;
+          break;
         }
       }
       if (found) {
@@ -1583,25 +1663,11 @@
     break;
     case "array":
       var arr = argument[0];
-      if (array_height_2d(arr) == 1 || array_length_2d(arr, 1) == 0) {
-        var size = array_length_1d(arr);
-        for (var i = 0; i < size; i++) {
-          if (typeof(argument[1]) == typeof(arr[i]) && argument[1] == arr[i]) {
-            found = true;
-            break;
-          }
-        }
-      }
-      else {
-        var size_i = array_height_2d(arr);
-        for (var i = 0; i < size_i && !found; i++) {
-          var size_j = array_length_2d(arr, i);
-          for (var j = 0; j < size_j; j++) {
-            if (typeof(argument[1]) == typeof(arr[i, j]) && argument[1] == arr[i, j]) {
-              found = true;
-              break;
-            }
-          }
+      var size = array_length(arr);
+      for (var i = 0; i < size; i++) {
+        if (typeof(argument[1]) == typeof(arr[i]) && argument[1] == arr[i]) {
+          found = true;
+          break;
         }
       }
       if (found) {
@@ -1632,4 +1698,841 @@
         __gma_assert_error_raw__(msg, "A string, array or list", __gma_debug_value__(argument[0]));
     break;
   }
+}
+
+#define assert_contains_2d
+/// @function assert_contains_2d(got, content, [msg]);
+/// @param got The actual received value for the assertion
+/// @param content A value to look for in the received value
+/// @param [msg] (optional) A custom message to display when the assertion fails
+/// @description Assert that the gotten grid or 2D array contains a value equal to content.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "2D inclusion assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check types and assertion
+  var found = false;
+  switch (typeof(argument[0])) {
+    case "array":
+      var arr = argument[0];
+      var size_i = array_length(arr);
+      for (var i = 0; i < size_i && !found; i++) {
+        var size_j = array_length(arr[i]);
+        for (var j = 0; j < size_j; j++) {
+          if (__gma_equal__(argument[1], arr[i][j])) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (!found) {
+        __gma_assert_error_raw__(msg, "A 2D array that contains " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
+      }
+    break;
+    case "number": case "int32": case "int64":
+      if (ds_exists(argument[0], ds_type_grid)) {
+        var grid = argument[0],
+            size_i = ds_grid_width(grid),
+            size_j = ds_grid_height(grid);
+        for (var i = 0; i < size_i && !found; i++) {
+          for (var j = 0; j < size_j; j++) {
+            if (__gma_equal__(argument[1], grid[# i, j])) {
+              found = true;
+              break;
+            }
+          }
+        }
+        if (!found) {
+          __gma_assert_error_raw__(msg, "A grid that contains " + __gma_debug_value__(argument[1]), __gma_debug_grid_value__(argument[0]));
+        }
+      }
+      else {
+        msg += " (grid ID does not exist)";
+        __gma_assert_error_raw__(msg, "An existent grid ID", __gma_debug_value__(argument[0]));
+      }
+    break;
+    default:
+      msg += " (invalid container type)";
+      __gma_assert_error_raw__(msg, "A grid or 2D array", __gma_debug_value__(argument[0]));
+    break;
+  }
+}
+
+#define assert_contains_exact_2d
+/// @function assert_contains_exact_2d(got, content, [msg]);
+/// @param got The actual received value for the assertion
+/// @param content A value to look for in the received value
+/// @param [msg] (optional) A custom message to display when the assertion fails
+/// @description Assert that the gotten grid or 2D array contains a value equal to content, as compared using ==.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Exact 2D inclusion assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check types and assertion
+  var found = false;
+  switch (typeof(argument[0])) {
+    case "array":
+      var arr = argument[0];
+      var size_i = array_length(arr);
+      for (var i = 0; i < size_i && !found; i++) {
+        var size_j = array_length(arr[i]);
+        for (var j = 0; j < size_j; j++) {
+          if (argument[1] == arr[i][j]) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (!found) {
+        __gma_assert_error_raw__(msg, "A 2D array that contains " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
+      }
+    break;
+    case "number": case "int32": case "int64":
+      if (ds_exists(argument[0], ds_type_grid)) {
+        var grid = argument[0],
+            size_i = ds_grid_width(grid),
+            size_j = ds_grid_height(grid);
+        for (var i = 0; i < size_i && !found; i++) {
+          for (var j = 0; j < size_j; j++) {
+            if (argument[1] == grid[# i, j]) {
+              found = true;
+              break;
+            }
+          }
+        }
+        if (!found) {
+          __gma_assert_error_raw__(msg, "A grid that contains " + __gma_debug_value__(argument[1]), __gma_debug_grid_value__(argument[0]));
+        }
+      }
+      else {
+        msg += " (grid ID does not exist)";
+        __gma_assert_error_raw__(msg, "An existent grid ID", __gma_debug_value__(argument[0]));
+      }
+    break;
+    default:
+      msg += " (invalid container type)";
+      __gma_assert_error_raw__(msg, "A grid or 2D array", __gma_debug_value__(argument[0]));
+    break;
+  }
+}
+
+#define assert_doesnt_contain_2d
+/// @function assert_doesnt_contain_2d(got, content, [msg]);
+/// @param got The actual received value for the assertion
+/// @param content A value to look for in the received value
+/// @param [msg] (optional) A custom message to display when the assertion fails
+/// @description Assert that the gotten grid or 2D array doesn't contain a value equal to content.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "2D non-inclusion assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check types and assertion
+  var found = false;
+  switch (typeof(argument[0])) {
+    case "array":
+      var arr = argument[0];
+      var size_i = array_length(arr);
+      for (var i = 0; i < size_i && !found; i++) {
+        var size_j = array_length(arr[i]);
+        for (var j = 0; j < size_j; j++) {
+          if (__gma_equal__(argument[1], arr[i][j])) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (found) {
+        __gma_assert_error_raw__(msg, "A 2D array that doesn't contain " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
+      }
+    break;
+    case "number": case "int32": case "int64":
+      if (ds_exists(argument[0], ds_type_grid)) {
+        var grid = argument[0],
+            size_i = ds_grid_width(grid),
+            size_j = ds_grid_height(grid);
+        for (var i = 0; i < size_i && !found; i++) {
+          for (var j = 0; j < size_j; j++) {
+            if (__gma_equal__(argument[1], grid[# i, j])) {
+              found = true;
+              break;
+            }
+          }
+        }
+        if (found) {
+          __gma_assert_error_raw__(msg, "A grid that doesn't contain " + __gma_debug_value__(argument[1]), __gma_debug_grid_value__(argument[0]));
+        }
+      }
+      else {
+        msg += " (grid ID does not exist)";
+        __gma_assert_error_raw__(msg, "An existent grid ID", __gma_debug_value__(argument[0]));
+      }
+    break;
+    default:
+      msg += " (invalid container type)";
+      __gma_assert_error_raw__(msg, "A grid or 2D array", __gma_debug_value__(argument[0]));
+    break;
+  }
+}
+
+#define assert_doesnt_contain_exact_2d
+/// @function assert_doesnt_contain_exact_2d(got, content, [msg]);
+/// @param got The actual received value for the assertion
+/// @param content A value to look for in the received value
+/// @param [msg] (optional) A custom message to display when the assertion fails
+/// @description Assert that the gotten grid or 2D array doesn't contain a value equal to content, as compared using ==.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Exact 2D non-inclusion assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check types and assertion
+  var found = false;
+  switch (typeof(argument[0])) {
+    case "array":
+      var arr = argument[0];
+      var size_i = array_length(arr);
+      for (var i = 0; i < size_i && !found; i++) {
+        var size_j = array_length(arr[i]);
+        for (var j = 0; j < size_j; j++) {
+          if (argument[1] == arr[i][j]) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (found) {
+        __gma_assert_error_raw__(msg, "A 2D array that doesn't contain " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
+      }
+    break;
+    case "number": case "int32": case "int64":
+      if (ds_exists(argument[0], ds_type_grid)) {
+        var grid = argument[0],
+            size_i = ds_grid_width(grid),
+            size_j = ds_grid_height(grid);
+        for (var i = 0; i < size_i && !found; i++) {
+          for (var j = 0; j < size_j; j++) {
+            if (argument[1] == grid[# i, j]) {
+              found = true;
+              break;
+            }
+          }
+        }
+        if (found) {
+          __gma_assert_error_raw__(msg, "A grid that doesn't contain " + __gma_debug_value__(argument[1]), __gma_debug_grid_value__(argument[0]));
+        }
+      }
+      else {
+        msg += " (grid ID does not exist)";
+        __gma_assert_error_raw__(msg, "An existent grid ID", __gma_debug_value__(argument[0]));
+      }
+    break;
+    default:
+      msg += " (invalid container type)";
+      __gma_assert_error_raw__(msg, "A grid or 2D array", __gma_debug_value__(argument[0]));
+    break;
+  }
+}
+
+#define assert_doesnt_have_key
+///@func assert_doesnt_have_key(got, key, [msg])
+///@param got The actual received value for the assertion
+///@param key The key got should not have
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given struct or map does not have the given key.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "No-key assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion (struct form)
+  if (is_struct(argument[0])) {
+    if (variable_struct_exists(argument[0], argument[1])) {
+      __gma_assert_error_raw__(msg, "A map or struct without key " + __gma_debug_value__(argument[1]), __gma_debug_struct_value__(argument[0]));
+    }
+  }
+  //Check assertion (map form)
+  else if (is_real(argument[0]) || is_int32(argument[0]) || is_int64(argument[0])) {
+    if (!ds_exists(argument[0], ds_type_map) || ds_map_exists(argument[0], argument[1])) {
+      __gma_assert_error_raw__(msg, "A map or struct without key " + __gma_debug_value__(argument[1]), __gma_debug_map_value__(argument[0]));
+    }
+  }
+  //Invalid
+  else {
+    __gma_assert_error_raw__(msg, "A map or struct without key " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_doesnt_have_method
+///@func assert_doesnt_have_method(got, methodName, [msg])
+///@param got The actual received value for the assertion
+///@param methodName The method name got should not have
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given value does not have a method of the given name.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "No-method assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (!is_struct(argument[0]) || (variable_struct_exists(argument[0], argument[1]) && is_method(variable_struct_get(argument[0], argument[1])))) {
+    __gma_assert_error_raw__(msg, "A struct without a method named " + argument[1], __gma_debug_struct_value__(argument[0]));
+  }
+}
+
+#define assert_doesnt_throw
+///@func assert_doesnt_throw(func, thrown, [msg])
+///@param func The function to run (can be function or 2-array of a function plus its argument)
+///@param thrown The thing that func should not throw
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given function throws nothing or something other than the given thing.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "No-throw assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  var _func, _arg, _arg0;
+  var _noarg = false;
+  if (is_array(argument[0])) {
+    _arg0 = argument[0];
+    _func = _arg0[0];
+    _arg = _arg0[1];
+  } else {
+    _func = argument[0];
+    _noarg = true;
+  }
+  //Check assertion
+  try {
+    if (_noarg) {
+      _func();
+    } else {
+      _func(_arg);
+    }
+  } catch (exc) {
+    if (__gma_equal__(exc, argument[1])) {
+      __gma_assert_error_raw__(msg, "No throw " + __gma_debug_value__(argument[1]), "throw " + __gma_debug_value__(exc));
+    }
+    exit;
+  }
+}
+
+#define assert_doesnt_throw_instance_of
+///@func assert_doesnt_throw_instance_of(func, typeName, [msg])
+///@param func The function to run (can be function or 2-array of a function plus its argument)
+///@param typeName The type of the thing func should not throw
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given function doesn't throw the given type of thing.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Not-throw-type assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  var _func, _arg, _arg0;
+  var _noarg = false;
+  if (is_array(argument[0])) {
+    _arg0 = argument[0];
+    _func = _arg0[0];
+    _arg = _arg0[1];
+  } else {
+    _func = argument[0];
+    _noarg = true;
+  }
+  //Check assertion
+  try {
+    if (_noarg) {
+      _func();
+    } else {
+      _func(_arg);
+    }
+  } catch (exc) {
+    if (typeof(exc) == argument[1] || (is_struct(exc) && instanceof(exc) == argument[1])) {
+      __gma_assert_error_raw__(msg, "throw type other than " + argument[1], "throw " + __gma_debug_value__(exc));
+    }
+    exit;
+  }
+}
+
+#define assert_has_key
+///@func assert_has_key(got, key, [msg])
+///@param got The actual received value for the assertion
+///@param key The key got should have
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given struct or map has the given key.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Key assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion (struct form)
+  if (is_struct(argument[0])) {
+    if (!variable_struct_exists(argument[0], argument[1])) {
+      __gma_assert_error_raw__(msg, "A map or struct with key " + __gma_debug_value__(argument[1]), __gma_debug_struct_value__(argument[0]));
+    }
+  }
+  //Check assertion (map form)
+  else if (is_real(argument[0]) || is_int32(argument[0]) || is_int64(argument[0])) {
+    if (!ds_exists(argument[0], ds_type_map) || !ds_map_exists(argument[0], argument[1])) {
+      __gma_assert_error_raw__(msg, "A map or struct with key " + __gma_debug_value__(argument[1]), __gma_debug_map_value__(argument[0]));
+    }
+  }
+  //Invalid
+  else {
+    __gma_assert_error_raw__(msg, "A map or struct with key " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_has_method
+///@func assert_has_method(got, methodName, [msg])
+///@param got The actual received value for the assertion
+///@param methodName The method name got should have
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given value has a method of the given name.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Method assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (!is_struct(argument[0]) || !variable_struct_exists(argument[0], argument[1]) || !is_method(variable_struct_get(argument[0], argument[1]))) {
+    __gma_assert_error_raw__(msg, "A struct with a method named " + argument[1], __gma_debug_struct_value__(argument[0]));
+  }
+}
+
+#define assert_is_instance_of
+///@func assert_is_instance_of(got, typeName, [msg])
+///@param got The actual received value for the assertion
+///@param typeName The type that the given value should have
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given value has the given type.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Instance-of assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (typeof(argument[0]) != argument[1] && (!is_struct(argument[0]) || instanceof(argument[0]) != argument[1])) {
+    __gma_assert_error_raw__(msg, "Anything of type " + argument[1], __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_is_method
+///@func assert_is_method(got, [msg])
+///@param got The actual received value for the assertion
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the gotten expression is a method.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 1:
+      msg = "Function type assertion failed!";
+    break;
+    case 2:
+      msg = argument[1];
+    break;
+    default:
+      show_error("Expected 1 or 2 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (!is_method(argument[0])) {
+    __gma_assert_error_raw__(msg, "Any method", __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_is_struct
+///@func assert_is_struct(got, [msg])
+///@param got The actual received value for the assertion
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the gotten expression is a struct.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 1:
+      msg = "Struct type assertion failed!";
+    break;
+    case 2:
+      msg = argument[1];
+    break;
+    default:
+      show_error("Expected 1 or 2 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (!is_struct(argument[0])) {
+    __gma_assert_error_raw__(msg, "Any struct", __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_isnt_instance_of
+///@func assert_isnt_instance_of(got, typeName, [msg])
+///@param got The actual received value for the assertion
+///@param typeName The type that the given value should not have
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given value does not have the given type.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Not-instance-of assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (typeof(argument[0]) == argument[1] || (is_struct(argument[0]) && instanceof(argument[0]) == argument[1])) {
+    __gma_assert_error_raw__(msg, "Anything not of type " + argument[1], __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_isnt_method
+///@func assert_isnt_method(got, [msg])
+///@param got The actual received value for the assertion
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the gotten expression is not a method.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 1:
+      msg = "Non-function type assertion failed!";
+    break;
+    case 2:
+      msg = argument[1];
+    break;
+    default:
+      show_error("Expected 1 or 2 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (is_method(argument[0])) {
+    __gma_assert_error_raw__(msg, "Anything but a method", __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_isnt_struct
+///@func assert_isnt_struct(got, [msg])
+///@param got The actual received value for the assertion
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the gotten expression is not a struct.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 1:
+      msg = "Non-struct type assertion failed!";
+    break;
+    case 2:
+      msg = argument[1];
+    break;
+    default:
+      show_error("Expected 1 or 2 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  //Check assertion
+  if (is_struct(argument[0])) {
+    __gma_assert_error_raw__(msg, "Anything but a struct", __gma_debug_value__(argument[0]));
+  }
+}
+
+#define assert_not_throwless
+///@func assert_not_throwless(func, [msg])
+///@param func The function to run (can be function or 2-array of a function plus its argument)
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the function run throws something
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 1:
+      msg = "Not-throwless assertion failed!";
+    break;
+    case 2:
+      msg = argument[1];
+    break;
+    default:
+      show_error("Expected 1 or 2 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  var _func, _arg, _arg0;
+  var _noarg = false;
+  if (is_array(argument[0])) {
+    _arg0 = argument[0];
+    _func = _arg0[0];
+    _arg = _arg0[1];
+  } else {
+    _func = argument[0];
+    _noarg = true;
+  }
+  //Check assertion
+  try {
+    if (_noarg) {
+      _func();
+    } else {
+      _func(_arg);
+    }
+  } catch (exc) {
+    exit;
+  }
+  __gma_assert_error_raw__(msg, "throw something", "throw <none>");
+}
+
+#define assert_throwless
+///@func assert_throwless(func, [msg])
+///@param func The function to run (can be function or 2-array of a function plus its argument)
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the function run throws nothing
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 1:
+      msg = "Throwless assertion failed!";
+    break;
+    case 2:
+      msg = argument[1];
+    break;
+    default:
+      show_error("Expected 1 or 2 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  var _func, _arg, _arg0;
+  var _noarg = false;
+  if (is_array(argument[0])) {
+    _arg0 = argument[0];
+    _func = _arg0[0];
+    _arg = _arg0[1];
+  } else {
+    _func = argument[0];
+    _noarg = true;
+  }
+  //Check assertion
+  try {
+    if (_noarg) {
+      _func();
+    } else {
+      _func(_arg);
+    }
+  } catch (exc) {
+    __gma_assert_error_raw__(msg, "throw <none>", "throw " + __gma_debug_value__(exc));
+  }
+}
+
+#define assert_throws
+///@func assert_throws(func, thrown, [msg])
+///@param func The function to run (can be function or 2-array of a function plus its argument)
+///@param thrown The thing that func should throw
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given function throws the given thing.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Throw assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  var _func, _arg, _arg0;
+  var _noarg = false;
+  if (is_array(argument[0])) {
+    _arg0 = argument[0];
+    _func = _arg0[0];
+    _arg = _arg0[1];
+  } else {
+    _func = argument[0];
+    _noarg = true;
+  }
+  //Check assertion
+  try {
+    if (_noarg) {
+      _func();
+    } else {
+      _func(_arg);
+    }
+  } catch (exc) {
+    if (!__gma_equal__(exc, argument[1])) {
+      __gma_assert_error_raw__(msg, "throw " + __gma_debug_value__(argument[1]), "throw " + __gma_debug_value__(exc));
+    }
+    exit;
+  }
+  __gma_assert_error_raw__(msg, "throw " + __gma_debug_value__(argument[1]), "throw <none>");
+}
+
+#define assert_throws_instance_of
+///@func assert_throws_instance_of(func, typeName, [msg])
+///@param func The function to run (can be function or 2-array of a function plus its argument)
+///@param typeName The type of the thing func should throw
+///@param [msg] (optional) A custom message to display when the assertion fails
+///@description Assert that the given function throws the given type of thing.
+{
+  if (!GMASSERT_ENABLED) exit;
+  //Capture message argument
+  var msg;
+  switch (argument_count) {
+    case 2:
+      msg = "Throw-type assertion failed!";
+    break;
+    case 3:
+      msg = argument[2];
+    break;
+    default:
+      show_error("Expected 2 or 3 arguments, got " + string(argument_count) + ".", true);
+    break;
+  }
+  var _func, _arg, _arg0;
+  var _noarg = false;
+  if (is_array(argument[0])) {
+    _arg0 = argument[0];
+    _func = _arg0[0];
+    _arg = _arg0[1];
+  } else {
+    _func = argument[0];
+    _noarg = true;
+  }
+  //Check assertion
+  try {
+    if (_noarg) {
+      _func();
+    } else {
+      _func(_arg);
+    }
+  } catch (exc) {
+    if (typeof(exc) != argument[1] && (!is_struct(exc) || instanceof(exc) != argument[1])) {
+      __gma_assert_error_raw__(msg, "throw type " + argument[1], "throw " + __gma_debug_value__(exc));
+    }
+    exit;
+  }
+  __gma_assert_error_raw__(msg, "throw type " + argument[1], "throw <none>");
 }

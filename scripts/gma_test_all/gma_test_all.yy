@@ -5,8 +5,8 @@
     "name": "gmassert_test",
     "path": "folders/Scripts/gmassert_test.yy",
   },
-  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
   "name": "gma_test_all",
   "tags": [],
-  "resourceVersion": "1.0",
+  "resourceType": "GMScript",
 }

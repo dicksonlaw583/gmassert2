@@ -1,8 +1,15 @@
 function __gma_test_trigger_messages__() {
 	var arrayA = [1, 2, 3],
 	    arrayB = [["a", "b"], ["c", "d"]],
-	    list = ds_list_create();
+      structA = {a: 3, b: 5, c: 7},
+      structB = {a: {b: 5, c: 7, d: 9}},
+	    list = ds_list_create(),
+      grid = ds_grid_create(2, 2);
 	ds_list_add(list, "a", "b", 1, 2);
+  grid[# 0, 0] = "A";
+  grid[# 1, 0] = "B";
+  grid[# 0, 1] = "C";
+  grid[# 1, 1] = "D";
 
 	//assert(got)
 	test_case_no_trigger(assert(5 > 3));
@@ -26,18 +33,25 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_equal(undefined, undefined));
 	test_case_no_trigger(assert_equal(arrayA, arrayA));
 	test_case_no_trigger(assert_equal(arrayB, arrayB));
+  test_case_no_trigger(assert_equal(structA, structA));
+	test_case_no_trigger(assert_equal(structB, structB));
 	test_case_trigger(assert_equal(-4, 7));
 	test_case_trigger(assert_equal("abc", ""));
 	test_case_trigger(assert_equal(undefined, 72));
 	test_case_trigger(assert_equal(arrayA, arrayB));
 	test_case_no_trigger(assert_equal([1, 2, 3], [1, 2, 3]));
 	test_case_no_trigger(assert_equal(arrayA, [1, 2, 3]));
+  test_case_trigger(assert_equal({a: 3}, {b: 4}));
+  test_case_trigger(assert_equal({a: 3}, {a: 3, b: 4}));
+  test_case_no_trigger(assert_equal({a: 3, b: 4}, {a: 3, b: 4}));
+  test_case_no_trigger(assert_equal({a: 3, b: 4}, {b: 4, a: 3}));
 
 	//assert_not_equal(got, expected)
 	test_case_no_trigger(assert_not_equal(-4, 7));
 	test_case_no_trigger(assert_not_equal("abc", ""));
 	test_case_no_trigger(assert_not_equal(undefined, 72));
 	test_case_no_trigger(assert_not_equal(arrayA, arrayB));
+  test_case_no_trigger(assert_not_equal(structA, structB));
 	test_case_trigger(assert_not_equal(arrayA, [1, 2, 3]));
 	test_case_trigger(assert_not_equal([1, 2, 3], [1, 2, 3]));
 	test_case_trigger(assert_not_equal(-4, -4));
@@ -45,6 +59,10 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_not_equal(undefined, undefined));
 	test_case_trigger(assert_not_equal(arrayA, arrayA));
 	test_case_trigger(assert_not_equal(arrayB, arrayB));
+  test_case_no_trigger(assert_not_equal({a: 3}, {b: 4}));
+  test_case_no_trigger(assert_not_equal({a: 3}, {a: 3, b: 4}));
+  test_case_trigger(assert_not_equal({a: 3, b: 4}, {a: 3, b: 4}));
+  test_case_trigger(assert_not_equal({a: 3, b: 4}, {b: 4, a: 3}));
 
 	//assert_is(got, expected)
 	test_case_no_trigger(assert_is(-4, -4));
@@ -52,23 +70,30 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_is(undefined, undefined));
 	test_case_no_trigger(assert_is(arrayA, arrayA));
 	test_case_no_trigger(assert_is(arrayB, arrayB));
+  test_case_no_trigger(assert_is(structA, structA));
+	test_case_no_trigger(assert_is(structB, structB));
 	test_case_trigger(assert_is(-4, 7));
 	test_case_trigger(assert_is("abc", ""));
 	test_case_trigger(assert_is(undefined, 72));
 	test_case_trigger(assert_is(arrayA, arrayB));
 	test_case_trigger(assert_is([1, 2, 3], [1, 2, 3]));
+  test_case_trigger(assert_is({a: 3, b: 4}, {a: 3, b: 4}));
 
 	//assert_isnt(got, expected)
 	test_case_no_trigger(assert_isnt(-4, 7));
 	test_case_no_trigger(assert_isnt("abc", ""));
 	test_case_no_trigger(assert_isnt(undefined, 72));
 	test_case_no_trigger(assert_isnt(arrayA, arrayB));
+  test_case_no_trigger(assert_isnt(structA, structB));
 	test_case_no_trigger(assert_isnt([1, 2, 3], [1, 2, 3]));
+  test_case_no_trigger(assert_isnt({a: 3, b: 4}, {a: 3, b: 4}));
 	test_case_trigger(assert_isnt(-4, -4));
 	test_case_trigger(assert_isnt("abc", "abc"));
 	test_case_trigger(assert_isnt(undefined, undefined));
 	test_case_trigger(assert_isnt(arrayA, arrayA));
 	test_case_trigger(assert_isnt(arrayB, arrayB));
+  test_case_trigger(assert_isnt(structA, structA));
+	test_case_trigger(assert_isnt(structB, structB));
 
 	//assert_equalish(got, expected)
 	test_case_no_trigger(assert_equalish(-4, -4));
@@ -76,6 +101,8 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_equalish(undefined, undefined));
 	test_case_no_trigger(assert_equalish(arrayA, arrayA));
 	test_case_no_trigger(assert_equalish(arrayB, arrayB));
+  test_case_no_trigger(assert_equalish(structA, structA));
+	test_case_no_trigger(assert_equalish(structB, structB));
 	test_case_trigger(assert_equalish(-4, 7));
 	test_case_trigger(assert_equalish("abc", ""));
 	test_case_trigger(assert_equalish(undefined, 72));
@@ -86,12 +113,15 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_equalish(5, 5+GMASSERT_TOLERANCE/2));
 	test_case_trigger(assert_equalish([6, 5], [6, 5.001]));
 	test_case_no_trigger(assert_equalish([6, 5], [6, 5+GMASSERT_TOLERANCE/2]));
+  test_case_trigger(assert_equalish([{foo: 6, bar: 5}], [{foo:6, bar: 5.001}]));
+	test_case_no_trigger(assert_equalish([{foo: 6, bar: 5}], [{foo: 6, bar: 5+GMASSERT_TOLERANCE/2}]));
 
 	//assert_not_equalish(got, expected)
 	test_case_no_trigger(assert_not_equalish(-4, 7));
 	test_case_no_trigger(assert_not_equalish("abc", ""));
 	test_case_no_trigger(assert_not_equalish(undefined, 72));
 	test_case_no_trigger(assert_not_equalish(arrayA, arrayB));
+  test_case_no_trigger(assert_not_equalish(structA, structB));
 	test_case_trigger(assert_not_equalish(arrayA, [1, 2, 3]));
 	test_case_trigger(assert_not_equalish([1, 2, 3], [1, 2, 3]));
 	test_case_trigger(assert_not_equalish(-4, -4));
@@ -99,10 +129,14 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_not_equalish(undefined, undefined));
 	test_case_trigger(assert_not_equalish(arrayA, arrayA));
 	test_case_trigger(assert_not_equalish(arrayB, arrayB));
+  test_case_trigger(assert_not_equalish(structA, structA));
+	test_case_trigger(assert_not_equalish(structB, structB));
 	test_case_no_trigger(assert_not_equalish(5, 5.001));
 	test_case_trigger(assert_not_equalish(5, 5+GMASSERT_TOLERANCE/2));
 	test_case_no_trigger(assert_not_equalish([6, 5], [6, 5.001]));
 	test_case_trigger(assert_not_equalish([6, 5], [6, 5+GMASSERT_TOLERANCE/2]));
+  test_case_no_trigger(assert_not_equalish([{foo: 6, bar: 5}], [{foo: 6, bar: 5.001}]));
+	test_case_trigger(assert_not_equalish([{foo: 6, bar: 5}], [{foo: 6, bar: 5+GMASSERT_TOLERANCE/2}]));
 
 	//assert_greater_than(got, expected)
 	test_case_trigger(assert_greater_than("NOT SUPPORTED", undefined));
@@ -110,6 +144,7 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_greater_than("cat", "boogie"));
 	test_case_no_trigger(assert_greater_than("DOGS", "DOG"));
 	test_case_no_trigger(assert_greater_than([5, "cat", "DOGS"], [4, "boogie", "DOG"]));
+  test_case_no_trigger(assert_greater_than({foo: 5, bar: "cat", baz: "DOGS"}, {foo: 4, bar: "boogie", baz: "DOG"}));
 	test_case_no_trigger(assert_greater_than([[5, "cat"], ["DOGS", 907]], [[4, "boogie"], ["DOG", 583]]));
 	test_case_trigger(assert_greater_than(3, 5));
 	test_case_trigger(assert_greater_than(3, 3));
@@ -117,9 +152,12 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_greater_than("boogie", "boogie"));
 	test_case_trigger(assert_greater_than("DOG", "DOGS"));
 	test_case_trigger(assert_greater_than([5, "cat", "DOGS"], [4, "cat", "DOG"]));
+  test_case_trigger(assert_greater_than({foo: 5, bar: "cat", baz: "DOGS"}, {foo: 4, bar: "cat", baz: "DOG"}));
 	test_case_trigger(assert_greater_than(arrayA, arrayA));
+  test_case_trigger(assert_greater_than(structA, structA));
 	test_case_trigger(assert_greater_than([[5, "cat"], ["DOGS", 907]], [[4, "boogie"], ["DOG", 907]]));
 	test_case_trigger(assert_greater_than(arrayB, arrayB));
+  test_case_trigger(assert_greater_than(structB, structB));
 
 	//assert_less_than(got, expected)
 	test_case_trigger(assert_less_than("NOT SUPPORTED", undefined));
@@ -127,6 +165,7 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_less_than("cat", "boogie"));
 	test_case_trigger(assert_less_than("DOGS", "DOG"));
 	test_case_trigger(assert_less_than([2, "cat", "DOGS"], [4, "boogie", "DOG"]));
+  test_case_trigger(assert_less_than({foo: 2, bar: "cat", baz: "DOGS"}, {foo: 4, bar: "boogie", baz: "DOG"}));
 	test_case_trigger(assert_less_than([[3, "cat"], ["DOG", 907]], [[4, "boogie"], ["DOGS", 583]]));
 	test_case_no_trigger(assert_less_than(3, 5));
 	test_case_trigger(assert_less_than(3, 3));
@@ -134,11 +173,15 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_less_than("boogie", "boogie"));
 	test_case_no_trigger(assert_less_than("DOG", "DOGS"));
 	test_case_no_trigger(assert_less_than([4, "cat", "DOG"], [5, "cats", "DOGS"]));
+  test_case_no_trigger(assert_less_than({foo: 4, bar: "cat", baz: "DOG"}, {foo: 5, bar: "cats", baz: "DOGS"}));
 	test_case_trigger(assert_less_than([5, "cat", "DOGS"], [4, "cat", "DOG"]));
+  test_case_trigger(assert_less_than({foo: 5, bar: "cat", baz: "DOGS"}, {foo: 4, bar: "cat", baz: "DOG"}));
 	test_case_trigger(assert_less_than(arrayA, arrayA));
+  test_case_trigger(assert_less_than(structA, structA));
 	test_case_no_trigger(assert_less_than([[4, "boogie"], ["DOG", 583]], [[5, "cat"], ["DOGS", 907]]));
 	test_case_trigger(assert_less_than([[5, "cat"], ["DOGS", 907]], [[4, "boogie"], ["DOG", 907]]));
 	test_case_trigger(assert_less_than(arrayB, arrayB));
+  test_case_trigger(assert_less_than(structA, structB));
 
 	//assert_greater_than_or_equal(got, expected)
 	test_case_trigger(assert_greater_than_or_equal("NOT SUPPORTED", undefined));
@@ -149,12 +192,15 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_greater_than_or_equal("DOGS", "DOG"));
 	test_case_no_trigger(assert_greater_than_or_equal([5, "cat", "DOGS"], [4, "boogie", "DOG"]));
 	test_case_no_trigger(assert_greater_than_or_equal([5, "cat", "DOG"], [4, "boogie", "DOG"]));
+  test_case_no_trigger(assert_greater_than_or_equal({foo: 5, bar: "cat", baz: "DOGS"}, {foo: 4, bar: "boogie", baz: "DOG"}));
+	test_case_no_trigger(assert_greater_than_or_equal({foo: 5, bar: "cat", baz: "DOG"}, {foo: 4, bar: "boogie", baz: "DOG"}));
 	test_case_no_trigger(assert_greater_than_or_equal([[5, "cat"], ["DOGS", 907]], [[4, "boogie"], ["DOG", 583]]));
 	test_case_no_trigger(assert_greater_than_or_equal([[4, "cat"], ["DOGS", 583]], [[4, "boogie"], ["DOG", 583]]));
 	test_case_trigger(assert_greater_than_or_equal(3, 5));
 	test_case_trigger(assert_greater_than_or_equal("boogie", "cat"));
 	test_case_trigger(assert_greater_than_or_equal("DOG", "DOGS"));
 	test_case_trigger(assert_greater_than_or_equal([5, "cat", "DOGS"], [4, "cats", "DOG"]));
+  test_case_trigger(assert_greater_than_or_equal({foo: 5, bar: "cat", baz: "DOGS"}, {foo: 4, bar: "cats", baz: "DOG"}));
 	test_case_trigger(assert_greater_than_or_equal([[5, "cat"], ["DOGS", 907]], [[4, "doggie"], ["DOG", 907]]));
 
 	//assert_less_than_or_equal(got, expected)
@@ -163,6 +209,7 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_less_than_or_equal("cat", "boogie"));
 	test_case_trigger(assert_less_than_or_equal("DOGS", "DOG"));
 	test_case_trigger(assert_less_than_or_equal([4, "boogie", "DOGS"], [5, "cat", "DOG"]));
+  test_case_trigger(assert_less_than_or_equal({foo: 4, bar: "boogie", baz: "DOGS"}, {foo: 5, bar: "cat", baz: "DOG"}));
 	test_case_trigger(assert_less_than_or_equal([[4, "cat"], ["DOGS", 907]], [[5, "boogie"], ["DOG", 583]]));
 	test_case_no_trigger(assert_less_than_or_equal(3, 5));
 	test_case_no_trigger(assert_less_than_or_equal(3, 3));
@@ -170,9 +217,12 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_less_than_or_equal("boogie", "boogie"));
 	test_case_no_trigger(assert_less_than_or_equal("DOG", "DOGS"));
 	test_case_no_trigger(assert_less_than_or_equal([4, "cat", "DOG"], [5, "cat", "DOGS"]));
+  test_case_no_trigger(assert_less_than_or_equal({foo: 4, bar: "cat", baz: "DOG"}, {foo: 5, bar: "cat", baz: "DOGS"}));
 	test_case_no_trigger(assert_less_than_or_equal(arrayA, arrayA));
+  test_case_no_trigger(assert_less_than_or_equal(structA, structA));
 	test_case_no_trigger(assert_less_than_or_equal([[2, "boogie"], ["DOG", 907]], [[5, "cat"], ["DOGS", 907]]));
 	test_case_no_trigger(assert_less_than_or_equal(arrayB, arrayB));
+  test_case_no_trigger(assert_less_than_or_equal(structB, structB));
 
 	//assert_is_string(got)
 	test_case_trigger(assert_is_string(undefined));
@@ -209,7 +259,7 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_is_array(arrayA));
 	test_case_no_trigger(assert_is_array(arrayB));
 
-	//assert_isn_array(got)
+	//assert_isnt_array(got)
 	test_case_no_trigger(assert_isnt_array(undefined));
 	test_case_no_trigger(assert_isnt_array(3));
 	test_case_no_trigger(assert_isnt_array(""));
@@ -217,12 +267,11 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_isnt_array(arrayB));
 
 	//assert_is_undefined(got)
-	//TODO: 1.4.1711 bug prevents assert_is_undefined() from saving at all, uncomment when resolved.
-	//test_case_no_trigger(assert_is_undefined(undefined));
-	//test_case_trigger(assert_is_undefined(3));
-	//test_case_trigger(assert_is_undefined(""));
-	//test_case_trigger(assert_is_undefined(arrayA));
-	//test_case_trigger(assert_is_undefined(arrayB));
+	test_case_no_trigger(assert_is_undefined(undefined));
+	test_case_trigger(assert_is_undefined(3));
+	test_case_trigger(assert_is_undefined(""));
+	test_case_trigger(assert_is_undefined(arrayA));
+	test_case_trigger(assert_is_undefined(arrayB));
 
 	//assert_is_defined(got)
 	test_case_trigger(assert_is_defined(undefined));
@@ -232,12 +281,11 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_is_defined(arrayB));
 
 	//assert_isnt_undefined(got)
-	//TODO: 1.4.1711 bug prevents assert_isnt_undefined() from saving at all, uncomment when resolved.
-	//test_case_trigger(assert_isnt_undefined(undefined));
-	//test_case_no_trigger(assert_isnt_undefined(3));
-	//test_case_no_trigger(assert_isnt_undefined(""));
-	//test_case_no_trigger(assert_isnt_undefined(arrayA));
-	//test_case_no_trigger(assert_isnt_undefined(arrayB));
+	test_case_trigger(assert_isnt_undefined(undefined));
+	test_case_no_trigger(assert_isnt_undefined(3));
+	test_case_no_trigger(assert_isnt_undefined(""));
+	test_case_no_trigger(assert_isnt_undefined(arrayA));
+	test_case_no_trigger(assert_isnt_undefined(arrayB));
 
 	//assert_isnt_defined(got)
 	test_case_no_trigger(assert_isnt_defined(undefined));
@@ -302,15 +350,26 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_contains("Caitlyn", "n"));
 	test_case_trigger(assert_contains(arrayA, "WAAHOO"));
 	test_case_no_trigger(assert_contains(arrayA, 3));
-	test_case_trigger(assert_contains(arrayB, undefined));
-	test_case_trigger(assert_contains(arrayB, 583));
-	test_case_trigger(assert_contains(arrayB, "superwaahoo"));
-	test_case_no_trigger(assert_contains(arrayB, "a"));
-	test_case_no_trigger(assert_contains(arrayB, "d"));
 	test_case_trigger(assert_contains(list, undefined));
 	test_case_trigger(assert_contains(list, arrayA));
 	test_case_no_trigger(assert_contains(list, "b"));
 	test_case_no_trigger(assert_contains(list, 2));
+  
+  //assert_contains_2d(got, content)
+  test_case_trigger(assert_contains_2d(undefined, "waahoo"));
+  var inexistent = 0;
+  while (ds_exists(inexistent, ds_type_grid)) inexistent++;
+  test_case_trigger(assert_contains_2d(inexistent, "a"));
+  test_case_trigger(assert_contains_2d(arrayB, undefined));
+	test_case_trigger(assert_contains_2d(arrayB, 583));
+	test_case_trigger(assert_contains_2d(arrayB, "superwaahoo"));
+	test_case_no_trigger(assert_contains_2d(arrayB, "a"));
+	test_case_no_trigger(assert_contains_2d(arrayB, "d"));
+  test_case_trigger(assert_contains_2d(grid, undefined));
+	test_case_trigger(assert_contains_2d(grid, 583));
+	test_case_trigger(assert_contains_2d(grid, "superwaahoo"));
+	test_case_no_trigger(assert_contains_2d(grid, "A"));
+	test_case_no_trigger(assert_contains_2d(grid, "D"));
 
 	//assert_doesnt_contain(got, content)
 	test_case_trigger(assert_doesnt_contain(undefined, "waahoo"));
@@ -324,15 +383,26 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_doesnt_contain("Caitlyn", "n"));
 	test_case_no_trigger(assert_doesnt_contain(arrayA, "WAAHOO"));
 	test_case_trigger(assert_doesnt_contain(arrayA, 3));
-	test_case_no_trigger(assert_doesnt_contain(arrayB, undefined));
-	test_case_no_trigger(assert_doesnt_contain(arrayB, 583));
-	test_case_no_trigger(assert_doesnt_contain(arrayB, "superwaahoo"));
-	test_case_trigger(assert_doesnt_contain(arrayB, "a"));
-	test_case_trigger(assert_doesnt_contain(arrayB, "d"));
 	test_case_no_trigger(assert_doesnt_contain(list, undefined));
 	test_case_no_trigger(assert_doesnt_contain(list, arrayA));
 	test_case_trigger(assert_doesnt_contain(list, "b"));
 	test_case_trigger(assert_doesnt_contain(list, 2));
+  
+  //assert_doesnt_contain_2d(got, content)
+  test_case_trigger(assert_doesnt_contain_2d(undefined, "waahoo"));
+	var inexistent = 0;
+	while (ds_exists(inexistent, ds_type_grid)) inexistent++;
+	test_case_trigger(assert_doesnt_contain_2d(inexistent, "a"));
+  test_case_no_trigger(assert_doesnt_contain_2d(arrayB, undefined));
+	test_case_no_trigger(assert_doesnt_contain_2d(arrayB, 583));
+	test_case_no_trigger(assert_doesnt_contain_2d(arrayB, "superwaahoo"));
+	test_case_trigger(assert_doesnt_contain_2d(arrayB, "a"));
+	test_case_trigger(assert_doesnt_contain_2d(arrayB, "d"));
+  test_case_no_trigger(assert_doesnt_contain_2d(grid, undefined));
+	test_case_no_trigger(assert_doesnt_contain_2d(grid, 583));
+	test_case_no_trigger(assert_doesnt_contain_2d(grid, "superwaahoo"));
+	test_case_trigger(assert_doesnt_contain_2d(grid, "A"));
+	test_case_trigger(assert_doesnt_contain_2d(grid, "D"));
 
 	//assert_contains_exact(got, content)
 	test_case_trigger(assert_contains_exact(undefined, "waahoo"));
@@ -346,15 +416,26 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_contains_exact("Caitlyn", "n"));
 	test_case_trigger(assert_contains_exact(arrayA, "WAAHOO"));
 	test_case_no_trigger(assert_contains_exact(arrayA, 3));
-	test_case_trigger(assert_contains_exact(arrayB, undefined));
-	test_case_trigger(assert_contains_exact(arrayB, 583));
-	test_case_trigger(assert_contains_exact(arrayB, "superwaahoo"));
-	test_case_no_trigger(assert_contains_exact(arrayB, "a"));
-	test_case_no_trigger(assert_contains_exact(arrayB, "d"));
 	test_case_trigger(assert_contains_exact(list, undefined));
 	test_case_trigger(assert_contains_exact(list, arrayA));
 	test_case_no_trigger(assert_contains_exact(list, "b"));
 	test_case_no_trigger(assert_contains_exact(list, 2));
+  
+  //assert_contains_exact_2d(got, content)
+  test_case_trigger(assert_contains_exact_2d(undefined, "waahoo"));
+  var inexistent = 0;
+  while (ds_exists(inexistent, ds_type_grid)) inexistent++;
+  test_case_trigger(assert_contains_exact_2d(inexistent, "a"));
+	test_case_trigger(assert_contains_exact_2d(arrayB, undefined));
+	test_case_trigger(assert_contains_exact_2d(arrayB, 583));
+	test_case_trigger(assert_contains_exact_2d(arrayB, "superwaahoo"));
+	test_case_no_trigger(assert_contains_exact_2d(arrayB, "a"));
+	test_case_no_trigger(assert_contains_exact_2d(arrayB, "d"));
+  test_case_trigger(assert_contains_exact_2d(grid, undefined));
+	test_case_trigger(assert_contains_exact_2d(grid, 583));
+	test_case_trigger(assert_contains_exact_2d(grid, "superwaahoo"));
+	test_case_no_trigger(assert_contains_exact_2d(grid, "A"));
+	test_case_no_trigger(assert_contains_exact_2d(grid, "D"));
 
 	//assert_doesnt_contain_exact(got, content)
 	test_case_trigger(assert_doesnt_contain_exact(undefined, "waahoo"));
@@ -368,16 +449,27 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_doesnt_contain_exact("Caitlyn", "n"));
 	test_case_no_trigger(assert_doesnt_contain_exact(arrayA, "WAAHOO"));
 	test_case_trigger(assert_doesnt_contain_exact(arrayA, 3));
-	test_case_no_trigger(assert_doesnt_contain_exact(arrayB, undefined));
-	test_case_no_trigger(assert_doesnt_contain_exact(arrayB, 583));
-	test_case_no_trigger(assert_doesnt_contain_exact(arrayB, "superwaahoo"));
-	test_case_trigger(assert_doesnt_contain_exact(arrayB, "a"));
-	test_case_trigger(assert_doesnt_contain_exact(arrayB, "d"));
 	test_case_no_trigger(assert_doesnt_contain_exact(list, undefined));
 	test_case_no_trigger(assert_doesnt_contain_exact(list, arrayA));
 	test_case_trigger(assert_doesnt_contain_exact(list, "b"));
 	test_case_trigger(assert_doesnt_contain_exact(list, 2));
+  
+  //assert_doesnt_contain_exact_2d(got, content)
+  test_case_trigger(assert_doesnt_contain_exact_2d(undefined, "waahoo"));
+  var inexistent = 0;
+  while (ds_exists(inexistent, ds_type_grid)) inexistent++;
+  test_case_no_trigger(assert_doesnt_contain_exact_2d(arrayB, undefined));
+	test_case_no_trigger(assert_doesnt_contain_exact_2d(arrayB, 583));
+	test_case_no_trigger(assert_doesnt_contain_exact_2d(arrayB, "superwaahoo"));
+	test_case_trigger(assert_doesnt_contain_exact_2d(arrayB, "a"));
+	test_case_trigger(assert_doesnt_contain_exact_2d(arrayB, "d"));
+  test_case_no_trigger(assert_doesnt_contain_exact_2d(grid, undefined));
+	test_case_no_trigger(assert_doesnt_contain_exact_2d(grid, 583));
+	test_case_no_trigger(assert_doesnt_contain_exact_2d(grid, "superwaahoo"));
+	test_case_trigger(assert_doesnt_contain_exact_2d(grid, "A"));
+	test_case_trigger(assert_doesnt_contain_exact_2d(grid, "B"));
 
 	//CLEANUP
 	ds_list_destroy(list);
+  ds_grid_destroy(grid);
 }

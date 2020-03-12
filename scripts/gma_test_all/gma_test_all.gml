@@ -13,7 +13,9 @@ function gma_test_all() {
 	if (GMASSERT_ENABLED) {
 		__gma_test_debug_type__();
 		__gma_test_debug_value__();
+    __gma_test_debug_value_23__();
 		__gma_test_trigger_messages__();
+		__gma_test_trigger_messages_23__();
 	}
   
 	//Print result

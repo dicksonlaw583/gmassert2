@@ -5,8 +5,8 @@
     "name": "gmassert_test",
     "path": "folders/Scripts/gmassert_test.yy",
   },
-  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
   "name": "__gma_test_trigger_messages__",
   "tags": [],
-  "resourceVersion": "1.0",
+  "resourceType": "GMScript",
 }
