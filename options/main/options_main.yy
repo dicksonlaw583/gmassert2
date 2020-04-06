@@ -11,7 +11,7 @@
   "addon_amazon_apis": "",
   "addon_google_play_services": "",
   "option_spine_licence": false,
-  "resourceVersion": "1.0",
+  "resourceVersion": "1.1",
   "name": "Main",
   "tags": [],
   "resourceType": "GMMainOptions",

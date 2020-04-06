@@ -21,18 +21,9 @@
     {"id":{"name":"__init_global","path":"scripts/__init_global/__init_global.yy",},"order":1,},
     {"id":{"name":"test_fixture_grid","path":"scripts/test_fixture_grid/test_fixture_grid.yy",},"order":14,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
-    {"id":{"name":"notes","path":"notes/notes.yy",},"order":0,},
-    {"id":{"name":"compatibility_report_180419_148124812","path":"notes/compatibility_report_180419_148124812.yy",},"order":1,},
     {"id":{"name":"GMAssert","path":"extensions/GMAssert/GMAssert.yy",},"order":0,},
   ],
-  "isDnDProject": false,
-  "isEcma": false,
-  "tutorialPath": "",
-  "configs": {
-    "name": "Default",
-    "children": [],
-  },
-  "options": [
+  "Options": [
     {"name":"HTML5","path":"options/html5/options_html5.yy",},
     {"name":"iOS","path":"options/ios/options_ios.yy",},
     {"name":"Amazon Fire","path":"options/amazonfire/options_amazonfire.yy",},
@@ -44,6 +35,13 @@
     {"name":"Main","path":"options/main/options_main.yy",},
     {"name":"tvOS","path":"options/tvos/options_tvos.yy",},
   ],
+  "isDnDProject": false,
+  "isEcma": false,
+  "tutorialPath": "",
+  "configs": {
+    "name": "Default",
+    "children": [],
+  },
   "RoomOrder": [
     {"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},
   ],
@@ -65,7 +63,7 @@
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "23.1.1.122",
+    "IDEVersion": "23.1.1.131",
   },
   "resourceVersion": "1.3",
   "name": "GMAssert",
