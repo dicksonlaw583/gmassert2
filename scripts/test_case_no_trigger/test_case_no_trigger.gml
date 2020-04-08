@@ -8,7 +8,7 @@ function test_case_no_trigger() {
 	var msg;
 	switch (argument_count) {
 		case 1:
-			msg = "Should not have triggered assertion, but did!";
+			msg = "Test case " + string(global.__gma_case_count__) + " failed!";
 		break;
 		case 2:
 			msg = argument[1];
@@ -23,7 +23,6 @@ function test_case_no_trigger() {
 		show_debug_message("Test case " + string(global.__gma_case_count__) + ": FAIL");
 		global.__gma_fail_count__++;
 		global.__gma_test_time__ += current_time-global.__gma_test_time_start__;
-		var msg = "Test case " + string(global.__gma_case_count__) + " failed!";
 		if (os_browser == browser_not_a_browser) {
 			show_error(msg, false);
 		} else {
