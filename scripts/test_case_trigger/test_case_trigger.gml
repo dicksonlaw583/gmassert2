@@ -22,8 +22,9 @@ function test_case_trigger() {
 	if (global.__gma_assert_triggered__) {
 		show_debug_message("Test case " + string(global.__gma_case_count__) + ": PASS");
 	} else {
-		show_debug_message("Test case " + string(global.__gma_case_count__) + ": FAIL");
+		show_debug_message("Test case " + string(global.__gma_case_count__) + ": FAIL (" + msg + ")");
 		global.__gma_fail_count__++;
+		ds_list_add(global.__gma_fail_list__, msg);
 		global.__gma_test_time__ += current_time-global.__gma_test_time_start__;
 		if (os_browser == browser_not_a_browser) {
 			show_error(msg, false);
