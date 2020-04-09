@@ -125,21 +125,15 @@
       dv = "[" + result + "]";
     break;
     case "struct":
-      var openBracket, closeBracket;
-      var structType = instanceof(argument[0]);
+      var strc = argument[0];
+      var structType = instanceof(strc);
+      var __q = structType + ""; //DIRTY WORKAROUND: For squelching structType string leak in 23.1.1.114 Mac Runtime
       var result = "";
-      if (structType == "struct") {
-        openBracket = "{";
-        closeBracket = "}";
-      } else {
-        openBracket = structType + "({";
-        closeBracket = "})";
-      }
-      var properties = variable_struct_get_names(argument[0]);
+      var properties = variable_struct_get_names(strc);
       var size = array_length(properties);
       var gotFirst = false;
       for (var i = 0; i < size; i++) {
-        var propertyValue = variable_struct_get(argument[0], properties[i]);
+        var propertyValue = variable_struct_get(strc, properties[i]);
         if (is_method(propertyValue)) continue;
         if (gotFirst) {
           result += ", ";
@@ -148,7 +142,11 @@
         }
         result += properties[i] + ": " + __gma_debug_value__(propertyValue, true);
       }
-      dv = openBracket + result + closeBracket;
+      if (structType == "struct") {
+        dv = "{" + result + "}";
+      } else {
+        dv = structType + "({" + result + "})";
+      }
     break;
     case "bool":
       if (argument[0]) {
@@ -268,27 +266,24 @@
   //Fall back to __gma_debug_value__ if not a struct
   if (!is_struct(argument0)) return __gma_debug_value__(argument0, true);
   //Determine correct opening and closing
-  var openBracket, closeBracket;
-  var structType = instanceof(argument[0]);
-  if (structType == "struct") {
-    openBracket = "{";
-    closeBracket = "}";
-  } else {
-    openBracket = structType + "({";
-    closeBracket = "})";
-  }
+  var strc = argument[0];
+  var structType = instanceof(strc);
+  var __q = structType + ""; //DIRTY WORKAROUND: For squelching structType string leak in 23.1.1.114 Mac Runtime
   //Grab properties
-  var properties = variable_struct_get_names(argument[0]);
+  var properties = variable_struct_get_names(strc);
   var size = array_length(properties);
   var result = "";
   for (var i = 0; i < size; i++) {
     if (i > 0) {
       result += ", ";
     }
-    result += properties[i] + ": " + __gma_debug_value__(variable_struct_get(argument[0], properties[i]), true);
+    result += properties[i] + ": " + __gma_debug_value__(variable_struct_get(strc, properties[i]), true);
   }
   //Return combined result
-  return openBracket + result + closeBracket;
+  if (structType == "struct") {
+    return "{" + result + "}";
+  }
+  return structType + "({" + result + "})";
 }
 
 #define __gma_equal__
