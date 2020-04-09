@@ -1,6 +1,6 @@
 {
   "option_mac_display_name": "GMAssert",
-  "option_mac_app_id": "",
+  "option_mac_app_id": "com.bonigonta.gmassert",
   "option_mac_version": "1.0.0.0",
   "option_mac_output_dir": "~/GameMaker-Studio/GMAssert",
   "option_mac_team_id": "",
@@ -24,8 +24,9 @@
   "option_mac_app_category": "Games",
   "option_mac_enable_steam": false,
   "option_mac_disable_sandbox": false,
-  "resourceType": "GMMacOptions",
+  "option_mac_apple_sign_in": false,
+  "resourceVersion": "1.0",
   "name": "macOS",
   "tags": [],
-  "resourceVersion": "1.0",
+  "resourceType": "GMMacOptions",
 }
