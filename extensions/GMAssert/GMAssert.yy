@@ -38,7 +38,7 @@
         {"externalName":"__gma_greater_than_or_equal__","kind":11,"help":"__gma_greater_than_or_equal__(got, expected)","hidden":false,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"__gma_greater_than_or_equal__","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"__gma_less_than_or_equal__","kind":11,"help":"__gma_less_than_or_equal__(got, expected)","hidden":false,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"__gma_less_than_or_equal__","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"__gma_debug_value__","kind":11,"help":"__gma_debug_value__(val, [noprefix])","hidden":false,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"__gma_debug_value__","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"__gma_debug_list_value__","kind":11,"help":"__gma_debug_list_value__(val)","hidden":false,"returnType":2,"argCount":1,"args":[
+        {"externalName":"__gma_debug_list_value__","kind":11,"help":"__gma_debug_list_value__(val)","hidden":false,"returnType":1,"argCount":1,"args":[
             2,
           ],"resourceVersion":"1.0","name":"__gma_debug_list_value__","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"assert","kind":11,"help":"assert(got, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"assert","tags":[],"resourceType":"GMExtensionFunction",},
@@ -90,6 +90,15 @@
         {"externalName":"assert_throwless","kind":2,"help":"assert_throwless(func, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"assert_throwless","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"assert_throws","kind":2,"help":"assert_throws(func, thrown, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"assert_throws","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"assert_throws_instance_of","kind":2,"help":"assert_throws_instance_of(func, typeName, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"resourceVersion":"1.0","name":"assert_throws_instance_of","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"__gma_debug_grid_value__","kind":2,"help":"__gma_debug_grid_value__(val)","hidden":false,"returnType":1,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"__gma_debug_grid_value__","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"__gma_debug_map_value__","kind":2,"help":"__gma_debug_map_value__(val)","hidden":false,"returnType":1,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"__gma_debug_map_value__","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"__gma_debug_struct_value__","kind":2,"help":"__gma_debug_struct_value__(val)","hidden":false,"returnType":1,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"__gma_debug_struct_value__","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":9223372036854775807,"order":[
         {"name":"__gma_assert_error__","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"__gma_assert_error_simple__","path":"extensions/GMAssert/GMAssert.yy",},
@@ -101,7 +110,10 @@
         {"name":"__gma_greater_than_or_equal__","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"__gma_less_than_or_equal__","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"__gma_debug_value__","path":"extensions/GMAssert/GMAssert.yy",},
+        {"name":"__gma_debug_grid_value__","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"__gma_debug_list_value__","path":"extensions/GMAssert/GMAssert.yy",},
+        {"name":"__gma_debug_map_value__","path":"extensions/GMAssert/GMAssert.yy",},
+        {"name":"__gma_debug_struct_value__","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"assert","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"assert_fail","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"assert_operation","path":"extensions/GMAssert/GMAssert.yy",},

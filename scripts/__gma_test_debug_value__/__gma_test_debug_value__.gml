@@ -14,7 +14,9 @@ function __gma_test_debug_value__() {
   test_case(__gma_debug_value__(int64(-9)), "(int64)\r\nint64(-9)", "__gma_test_debug_value__: int64(-9)");
   
   //ptr
-  test_case(__gma_debug_value__(ptr($3A6B)), "(ptr)\r\nptr($3A6B)", "__gma_test_debug_value__: ptr($3A6B)");
+	if (os_browser == browser_not_a_browser) {
+		test_case(__gma_debug_value__(ptr($3A6B)), "(ptr)\r\nptr($3A6B)", "__gma_test_debug_value__: ptr($3A6B)");
+	}
 	
 	//strings
 	test_case(__gma_debug_value__(""), "(string)\r\n" + @'""', "__gma_test_debug_value__: empty string");
@@ -51,10 +53,10 @@ function __gma_test_debug_value__() {
   var mapEmpty = test_fixture_map(),
       mapFilled = test_fixture_map("foo", "bar", "baz", 907);
   test_case(__gma_debug_map_value__(mapEmpty), "map()", "__gma_test_debug_value__: empty map");
-  test_case(string_pos("map(", __gma_debug_map_value__(mapFilled)) > 0, bool(true), "__gma_test_debug_value__: map 1");
-  test_case(string_pos(@'"foo": "bar"', __gma_debug_map_value__(mapFilled)) > 0, bool(true), "__gma_test_debug_value__: map 2");
-  test_case(string_pos(@'"baz": 907', __gma_debug_map_value__(mapFilled)) > 0, bool(true), "__gma_test_debug_value__: map 3");
-  test_case(string_pos(")", __gma_debug_map_value__(mapFilled)) > 0, bool(true), "__gma_test_debug_value__: map 4");
+  test_case(bool(string_pos("map(", __gma_debug_map_value__(mapFilled)) > 0), bool(true), "__gma_test_debug_value__: map 1");
+  test_case(bool(string_pos(@'"foo": "bar"', __gma_debug_map_value__(mapFilled)) > 0), bool(true), "__gma_test_debug_value__: map 2");
+  test_case(bool(string_pos(@'"baz": 907', __gma_debug_map_value__(mapFilled)) > 0), bool(true), "__gma_test_debug_value__: map 3");
+  test_case(bool(string_pos(")", __gma_debug_map_value__(mapFilled)) > 0), bool(true), "__gma_test_debug_value__: map 4");
   //invalid map
   var mapDNE = mapFilled+1;
   while (ds_exists(mapDNE, ds_type_map)) mapDNE++;

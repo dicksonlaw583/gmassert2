@@ -127,7 +127,6 @@
     case "struct":
       var strc = argument[0];
       var structType = instanceof(strc);
-      var __q = structType + ""; //DIRTY WORKAROUND: For squelching structType string leak in 23.1.1.114 Mac Runtime
       var result = "";
       var properties = variable_struct_get_names(strc);
       var size = array_length(properties);
@@ -268,7 +267,6 @@
   //Determine correct opening and closing
   var strc = argument[0];
   var structType = instanceof(strc);
-  var __q = structType + ""; //DIRTY WORKAROUND: For squelching structType string leak in 23.1.1.114 Mac Runtime
   //Grab properties
   var properties = variable_struct_get_names(strc);
   var size = array_length(properties);
