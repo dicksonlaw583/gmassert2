@@ -32,9 +32,7 @@ function gma_test_all() {
 	} else {
 		show_debug_message("Warning: Tests skipped because GMAssert is disabled.");
 	}
-	if (os_browser == browser_not_a_browser) {
-		game_end();
-	} else if (GMASSERT_ENABLED) {
+	if (GMASSERT_ENABLED) {
 		if (global.__gma_fail_count__ == 0) {
 			__background_set_colour( c_green );
 		} else {
