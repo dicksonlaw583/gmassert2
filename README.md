@@ -1,6 +1,6 @@
-# GMAssert v2.0.0
+# GMAssert v2.1.0 BETA
 
-Assertion scripts for GameMaker Studio 2.x
+Assertion scripts for GameMaker Studio 2.3 (BETA)
 
 ```
 assert_not_equal("untested code", "good code", "You should have used GMAssert!");
@@ -12,13 +12,17 @@ GMAssert is a library containing useful assertions for debugging and automated u
 
 ## Requirements
 
-- GameMaker Studio 2.2.2 or above
+- GameMaker Studio 2.3 Open Beta
+
+If you use GameMaker Studio 2.2.5 or lower, please use v2.0.x.
 
 If you use GameMaker Studio 1.4, please see [GMAssert Legacy](https://github.com/dicksonlaw583/gmassert-legacy).
 
 ## Installation
 
-Download the latest version from [the YoYo Marketplace](https://marketplace.yoyogames.com/assets/8164/gmassert).
+~~Download the latest version from [the YoYo Marketplace](https://marketplace.yoyogames.com/assets/8164/gmassert).~~
+
+Get the current beta and associated documentation from [the releases page](https://github.com/dicksonlaw583/gmassert2/releases).
 
 *Optional:* If you wish to use the debugger or customize failure handling behaviour, export the extension's included `__GMA_BREAKPOINT__` script and follow the instructions inside.
 
