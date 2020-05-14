@@ -199,7 +199,7 @@
 /// @param val The value to derive a debug-friendly value from
 {
   //Return list(<INVALID>) if it does not exist
-  if (!ds_exists(argument0, ds_type_list)) {
+  if (!(is_real(argument0) || is_int32(argument0) || is_int64(argument0)) || !ds_exists(argument0, ds_type_list)) {
     return "list(<INVALID>)";
   }
   //Return list(entry1, entry2, ..., entry n) if it exists
@@ -219,7 +219,7 @@
 /// @param val The value to derive a debug-friendly value from
 {
   //Return grid(<INVALID>) if it does not exist
-  if (!ds_exists(argument0, ds_type_grid)) {
+  if (!(is_real(argument0) || is_int32(argument0) || is_int64(argument0)) || !ds_exists(argument0, ds_type_grid)) {
     return "grid(<INVALID>)";
   }
   //Return grid(a, b, c; d, e, f; ...)
@@ -241,7 +241,7 @@
 /// @param val The value to derive a debug-friendly value from
 {
   //Return map(<INVALID>) if it does not exist
-  if (!ds_exists(argument0, ds_type_map)) {
+  if (!(is_real(argument0) || is_int32(argument0) || is_int64(argument0)) || !ds_exists(argument0, ds_type_map)) {
     return "map(<INVALID>)";
   }
   //Return map(key0: value0, key1: value1, ..., keyN: valueN) if it exists
@@ -1447,7 +1447,7 @@
         __gma_assert_error_raw__(msg, "An array that contains " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
       }
     break;
-    case "number":
+    case "number": case "int32": case "int64":
       if (ds_exists(argument[0], ds_type_list)) {
         var list = argument[0],
             size = ds_list_size(list);
@@ -1521,7 +1521,7 @@
         __gma_assert_error_raw__(msg, "An array that contains exactly " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
       }
     break;
-    case "number":
+    case "number": case "int32": case "int64":
       if (ds_exists(argument[0], ds_type_list)) {
         var list = argument[0],
             size = ds_list_size(list);
@@ -1595,7 +1595,7 @@
         __gma_assert_error_raw__(msg, "An array that does not contain " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
       }
     break;
-    case "number":
+    case "number": case "int32": case "int64":
       if (ds_exists(argument[0], ds_type_list)) {
         var list = argument[0],
             size = ds_list_size(list);
@@ -1669,7 +1669,7 @@
         __gma_assert_error_raw__(msg, "An array that eoes not contain exactly " + __gma_debug_value__(argument[1]), __gma_debug_value__(argument[0]));
       }
     break;
-    case "number":
+    case "number": case "int32": case "int64":
       if (ds_exists(argument[0], ds_type_list)) {
         var list = argument[0],
             size = ds_list_size(list);
