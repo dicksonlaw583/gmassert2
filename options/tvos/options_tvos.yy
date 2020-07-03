@@ -19,8 +19,9 @@
   "option_tvos_texture_page": "2048x2048",
   "option_tvos_display_cursor": false,
   "option_tvos_push_notifications": false,
-  "resourceType": "GMtvOSOptions",
+  "option_tvos_apple_sign_in": false,
+  "resourceVersion": "1.0",
   "name": "tvOS",
   "tags": [],
-  "resourceVersion": "1.0",
+  "resourceType": "GMtvOSOptions",
 }

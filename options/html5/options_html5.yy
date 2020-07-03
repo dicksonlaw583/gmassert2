@@ -27,8 +27,8 @@
   "option_html5_flurry_id": "",
   "option_html5_google_analytics_enable": false,
   "option_html5_google_tracking_id": "",
-  "resourceType": "GMHtml5Options",
+  "resourceVersion": "1.0",
   "name": "HTML5",
   "tags": [],
-  "resourceVersion": "1.0",
+  "resourceType": "GMHtml5Options",
 }

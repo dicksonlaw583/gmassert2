@@ -28,8 +28,8 @@
   "option_windows_enable_steam": false,
   "option_windows_disable_sandbox": false,
   "option_windows_steam_use_alternative_launcher": false,
-  "resourceType": "GMWindowsOptions",
+  "resourceVersion": "1.0",
   "name": "Windows",
   "tags": [],
-  "resourceVersion": "1.0",
+  "resourceType": "GMWindowsOptions",
 }
