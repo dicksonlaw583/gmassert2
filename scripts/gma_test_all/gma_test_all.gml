@@ -6,15 +6,15 @@ function gma_test_all() {
 	global.__gma_assert_triggered__ = false;
 	global.__gma_test_time__ = 0;
 	global.__gma_fail_list__ = ds_list_create();
-  
+
 	//Start timer
 	global.__gma_test_time_start__ = current_time;
-  
+
 	//TESTS
 	if (GMASSERT_ENABLED) {
 		__gma_test_debug_type__();
 		__gma_test_debug_value__();
-    __gma_test_debug_value_23__();
+		__gma_test_debug_value_23__();
 		__gma_test_trigger_messages__();
 		__gma_test_trigger_messages_23__();
 	}
@@ -32,11 +32,8 @@ function gma_test_all() {
 	} else {
 		show_debug_message("Warning: Tests skipped because GMAssert is disabled.");
 	}
-	if (GMASSERT_ENABLED) {
-		if (global.__gma_fail_count__ == 0) {
-			__background_set_colour( c_green );
-		} else {
-			__background_set_colour( c_red );
-		}
-	}
+	
+	//Cleanup and return
+	ds_list_destroy(global.__gma_fail_list__);
+	return global.__gma_fail_count__ == 0;
 }

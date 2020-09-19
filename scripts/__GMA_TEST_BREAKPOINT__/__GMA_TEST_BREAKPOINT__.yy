@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "gmassert_test",
-    "path": "folders/Scripts/gmassert_test.yy",
+    "name": "GMAssert_test",
+    "path": "folders/Libraries_test/GMAssert_test.yy",
   },
-  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
   "name": "__GMA_TEST_BREAKPOINT__",
   "tags": [],
-  "resourceVersion": "1.0",
+  "resourceType": "GMScript",
 }
