@@ -38,8 +38,8 @@
     "name": "Default",
     "children": [],
   },
-  "RoomOrder": [
-    {"name":"rm_gmassert_test","path":"rooms/rm_gmassert_test/rm_gmassert_test.yy",},
+  "RoomOrderNodes": [
+    {"roomId":{"name":"rm_gmassert_test","path":"rooms/rm_gmassert_test/rm_gmassert_test.yy",},},
   ],
   "Folders": [
     {"folderPath":"folders/Libraries_test/GMAssert_test.yy","order":0,"resourceVersion":"1.0","name":"GMAssert_test","tags":[],"resourceType":"GMFolder",},
@@ -50,16 +50,16 @@
     {"folderPath":"folders/Libraries_test.yy","order":5,"resourceVersion":"1.0","name":"Libraries_test","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
-    {"targets":461609314234257646,"resourceVersion":"1.0","name":"audiogroup_default","resourceType":"GMAudioGroup",},
+    {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
   ],
   "TextureGroups": [
-    {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"targets":461609314234257646,"resourceVersion":"1.0","name":"Default","resourceType":"GMTextureGroup",},
+    {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,"resourceVersion":"1.3","name":"Default","resourceType":"GMTextureGroup",},
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "2.3.0.529",
+    "IDEVersion": "2.3.1.542",
   },
-  "resourceVersion": "1.3",
+  "resourceVersion": "1.4",
   "name": "GMAssert",
   "tags": [],
   "resourceType": "GMProject",
