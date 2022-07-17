@@ -1,6 +1,6 @@
 # GMAssert 2
 
-Assertion scripts for GameMaker Studio 2.3+
+Assertion scripts for GameMaker Studio 2.3+ and 2022+
 
 ```
 assert_not_equal("untested code", "good code", "You should have used GMAssert!");
@@ -12,7 +12,7 @@ GMAssert is a library containing useful assertions for debugging and automated u
 
 ## Requirements
 
-- GameMaker Studio 2.3.0 or above
+- GameMaker Studio 2.3.0 or above / 2022.1 or above
 
 If you use GameMaker Studio 2.2.5 or lower, please use [v2.0.0](https://github.com/dicksonlaw583/gmassert2/releases/tag/v2.0.0).
 
