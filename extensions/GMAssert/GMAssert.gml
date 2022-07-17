@@ -187,6 +187,12 @@
     case "vec4":
       dv = "vec4(" + string(argument[0]) + ")";
     break;
+    case "ref":
+      dv = string(argument[0]);
+    break;
+    default:
+      dv = typeof(argument[0]) + "(" + string(argument[0]) + ")";
+    break;
   }
   if (argument_count > 1 && argument[1]) {
     return dv;
