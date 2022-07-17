@@ -25,7 +25,7 @@ function gma_test_all() {
 		show_debug_message(string(global.__gma_case_count__-global.__gma_fail_count__) + " passed, " + string(global.__gma_fail_count__) + " failed (" + string((1-global.__gma_fail_count__/global.__gma_case_count__)*100) + "%)");
 		if (global.__gma_fail_count__ > 0) {
 			show_debug_message("Failed tests:");
-			for (var i = 0; i < global.__gma_fail_count__; ++i) {
+			for (var i = 0; i < ds_list_size(global.__gma_fail_list__); ++i) {
 				show_debug_message("- " + global.__gma_fail_list__[| i]);
 			}
 		}

@@ -42,8 +42,8 @@ function __gma_test_debug_value__() {
 	test_case(__gma_debug_list_value__(listEmpty), "list()", "__gma_test_debug_value__: empty list");
 	test_case(__gma_debug_list_value__(listFilled), "list(3, \"waahoo\", [5, 6, 7])", "__gma_test_debug_value__: list");
 	//invalid list
-	var listDNE = listFilled+1;
-	while (ds_exists(listDNE, ds_type_list)) listDNE++;
+	var listDNE = ds_list_create();
+	ds_list_destroy(listDNE);
 	test_case(__gma_debug_list_value__(listDNE), "list(<INVALID>)", "__gma_test_debug_value__: bad list");
 	//list cleanup
 	ds_list_destroy(listEmpty);
@@ -58,8 +58,8 @@ function __gma_test_debug_value__() {
   test_case(bool(string_pos(@'"baz": 907', __gma_debug_map_value__(mapFilled)) > 0), bool(true), "__gma_test_debug_value__: map 3");
   test_case(bool(string_pos(")", __gma_debug_map_value__(mapFilled)) > 0), bool(true), "__gma_test_debug_value__: map 4");
   //invalid map
-  var mapDNE = mapFilled+1;
-  while (ds_exists(mapDNE, ds_type_map)) mapDNE++;
+  var mapDNE = ds_map_create();
+  ds_map_destroy(mapDNE);
   test_case(__gma_debug_map_value__(mapDNE), "map(<INVALID>)", "__gma_test_debug_value__: bad map");
   //map cleanup
   ds_map_destroy(mapEmpty);
@@ -71,8 +71,8 @@ function __gma_test_debug_value__() {
   test_case(__gma_debug_grid_value__(gridEmpty), "grid()", "__gma_test_debug_value__: empty grid");
   test_case(__gma_debug_grid_value__(gridFilled), @'grid("foo", "bar", "baz"; 123, 456, 789)', "__gma_test_debug_value__: grid");
   //invalid grid
-  var gridDNE = gridFilled+1;
-  while (ds_exists(gridDNE, ds_type_grid)) gridDNE++;
+  var gridDNE = ds_grid_create(2, 2);
+  ds_grid_destroy(gridDNE);
   test_case(__gma_debug_grid_value__(gridDNE), "grid(<INVALID>)", "__gma_test_debug_value__: bad grid");
   //grid cleanup
   ds_grid_destroy(gridEmpty);

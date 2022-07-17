@@ -1,7 +1,7 @@
 ///@func __gma_test_debug_value_23__()
 function __gma_test_debug_value_23__() {
   var fixture = new Vector2(6, 8);
-  var got;
+  var got = "";
   //__gma_debug_value__() with structs
   got = __gma_debug_value__({a: 1, b: "foo", c: ["bar", 4, 5]});
   test_case(bool(string_pos("(struct)\r\n{", got) && string_pos("a: 1", got) && string_pos("b: \"foo\"", got) && string_pos("c: [\"bar\", 4, 5]", got) > 0), bool(true), "__gma_test_debug_value_23__: struct 1");
