@@ -1,6 +1,6 @@
-# GMAssert v2.2.0
+# GMAssert 2
 
-Assertion scripts for GameMaker Studio 2.3
+Assertion scripts for GameMaker Studio 2.3+
 
 ```
 assert_not_equal("untested code", "good code", "You should have used GMAssert!");
@@ -33,3 +33,4 @@ If you use GameMaker Studio 1.4, please see [GMAssert Legacy](https://github.com
 - Clone this repository.
 - Open the project in GameMaker Studio and make your additions/changes to the `GMAssert` extension. Also add corresponding tests to the `GMAssert_test` group.
 - Open a pull request [here](https://github.com/dicksonlaw583/gmassert2/issues).
+
