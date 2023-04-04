@@ -1,8 +1,5 @@
 {
-  "extensionId": {
-    "name": "GMAssert",
-    "path": "GMAssert.yyp"
-  },
+  "extensionId": null,
   "resourceVersion": "1.0",
   "resourceType": "GMExtensionConfigSet",
   "configurables": null

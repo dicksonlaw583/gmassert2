@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "__gma_test_debug_value__",
+  "name": "GMAssert_Internal",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "GMAssert_test",
-    "path": "folders/Libraries_test/GMAssert_test.yy",
+    "name": "GMAssert",
+    "path": "folders/Libraries/GMAssert.yy",
   },
 }

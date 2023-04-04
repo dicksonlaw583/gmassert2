@@ -18,6 +18,7 @@
     {"id":{"name":"__gma_test_trigger_messages__","path":"scripts/__gma_test_trigger_messages__/__gma_test_trigger_messages__.yy",},"order":8,},
     {"id":{"name":"__GMA_TEST_BREAKPOINT__","path":"scripts/__GMA_TEST_BREAKPOINT__/__GMA_TEST_BREAKPOINT__.yy",},"order":9,},
     {"id":{"name":"test_fixture_map","path":"scripts/test_fixture_map/test_fixture_map.yy",},"order":13,},
+    {"id":{"name":"GMAssert_Internal","path":"scripts/GMAssert_Internal/GMAssert_Internal.yy",},"order":2,},
     {"id":{"name":"test_fixture_grid","path":"scripts/test_fixture_grid/test_fixture_grid.yy",},"order":12,},
     {"id":{"name":"rm_gmassert_test","path":"rooms/rm_gmassert_test/rm_gmassert_test.yy",},"order":14,},
     {"id":{"name":"GMAssert","path":"extensions/GMAssert/GMAssert.yy",},"order":1,},
