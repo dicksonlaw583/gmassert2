@@ -20,7 +20,6 @@
   "installdir": "",
   "files": [
     {"resourceType":"GMExtensionFile","resourceVersion":"1.0","name":"","filename":"GMAssert.gml","origname":"extensions\\GMAssert.gml","init":"","final":"","kind":2,"uncompress":false,"functions":[
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_operation","externalName":"assert_operation","kind":2,"help":"assert_operation(got, expected, op, invert, [msg], [debug_got], [debug_expected])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
         {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_equal","externalName":"assert_equal","kind":2,"help":"assert_equal(got, expected, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
         {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_equalish","externalName":"assert_equalish","kind":2,"help":"assert_equalish(got, expected, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
         {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_is","externalName":"assert_is","kind":2,"help":"assert_is(got, expected, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
