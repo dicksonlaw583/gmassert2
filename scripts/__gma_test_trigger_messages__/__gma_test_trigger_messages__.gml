@@ -4,12 +4,13 @@ function __gma_test_trigger_messages__() {
 		structA = {a: 3, b: 5, c: 7},
 		structB = {a: {b: 5, c: 7, d: 9}},
 		list = ds_list_create(),
-		grid = ds_grid_create(2, 2);
+		grid = ds_grid_create(2, 2),
+		inexistent = 0;
 	ds_list_add(list, "a", "b", 1, 2);
-  grid[# 0, 0] = "A";
-  grid[# 1, 0] = "B";
-  grid[# 0, 1] = "C";
-  grid[# 1, 1] = "D";
+	grid[# 0, 0] = "A";
+	grid[# 1, 0] = "B";
+	grid[# 0, 1] = "C";
+	grid[# 1, 1] = "D";
 
 	//assert(got)
 	test_case_no_trigger(assert(5 > 3), "__gma_test_trigger_messages__: assert 1");
@@ -340,7 +341,7 @@ function __gma_test_trigger_messages__() {
 
 	//assert_contains(got, content)
 	test_case_trigger(assert_contains(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains 1");
-	var inexistent = 0;
+	inexistent = 0;
 	while (ds_exists(inexistent, ds_type_list)) inexistent++;
 	test_case_trigger(assert_contains(inexistent, "a"), "__gma_test_trigger_messages__: assert_contains 2");
 	test_case_trigger(assert_contains("waahoo", 5), "__gma_test_trigger_messages__: assert_contains 3");
@@ -357,7 +358,7 @@ function __gma_test_trigger_messages__() {
 
 	//assert_contains_2d(got, content)
 	test_case_trigger(assert_contains_2d(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains2d 1");
-	var inexistent = 0;
+	inexistent = 0;
 	while (ds_exists(inexistent, ds_type_grid)) inexistent++;
 	test_case_trigger(assert_contains_2d(inexistent, "a"), "__gma_test_trigger_messages__: assert_contains2d 2");
 	test_case_trigger(assert_contains_2d(arrayB, undefined), "__gma_test_trigger_messages__: assert_contains2d 3");
@@ -373,7 +374,7 @@ function __gma_test_trigger_messages__() {
 
 	//assert_doesnt_contain(got, content)
 	test_case_trigger(assert_doesnt_contain(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain 1");
-	var inexistent = 0;
+	inexistent = 0;
 	while (ds_exists(inexistent, ds_type_list)) inexistent++;
 	test_case_trigger(assert_doesnt_contain(inexistent, "a"), "__gma_test_trigger_messages__: assert_doesnt_contain 2");
 	test_case_trigger(assert_doesnt_contain("waahoo", 5), "__gma_test_trigger_messages__: assert_doesnt_contain 3");
@@ -390,7 +391,7 @@ function __gma_test_trigger_messages__() {
 
 	//assert_doesnt_contain_2d(got, content)
 	test_case_trigger(assert_doesnt_contain_2d(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain_2d 1");
-	var inexistent = 0;
+	inexistent = 0;
 	while (ds_exists(inexistent, ds_type_grid)) inexistent++;
 	test_case_trigger(assert_doesnt_contain_2d(inexistent, "a"), "__gma_test_trigger_messages__: assert_doesnt_contain_2d 2");
 	test_case_no_trigger(assert_doesnt_contain_2d(arrayB, undefined), "__gma_test_trigger_messages__: assert_doesnt_contain_2d 3");
@@ -406,7 +407,7 @@ function __gma_test_trigger_messages__() {
 
 	//assert_contains_exact(got, content)
 	test_case_trigger(assert_contains_exact(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains_exact 1");
-	var inexistent = 0;
+	inexistent = 0;
 	while (ds_exists(inexistent, ds_type_list)) inexistent++;
 	test_case_trigger(assert_contains_exact(inexistent, "a"), "__gma_test_trigger_messages__: assert_contains_exact 2");
 	test_case_trigger(assert_contains_exact("waahoo", 5), "__gma_test_trigger_messages__: assert_contains_exact 3");
@@ -423,7 +424,7 @@ function __gma_test_trigger_messages__() {
 
 	//assert_contains_exact_2d(got, content)
 	test_case_trigger(assert_contains_exact_2d(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains_exact_2d 1");
-	var inexistent = 0;
+	inexistent = 0;
 	while (ds_exists(inexistent, ds_type_grid)) inexistent++;
 	test_case_trigger(assert_contains_exact_2d(inexistent, "a"), "__gma_test_trigger_messages__: assert_contains_exact_2d 2");
 	test_case_trigger(assert_contains_exact_2d(arrayB, undefined), "__gma_test_trigger_messages__: assert_contains_exact_2d 3");
@@ -439,7 +440,7 @@ function __gma_test_trigger_messages__() {
 
 	//assert_doesnt_contain_exact(got, content)
 	test_case_trigger(assert_doesnt_contain_exact(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact 1");
-	var inexistent = 0;
+	inexistent = 0;
 	while (ds_exists(inexistent, ds_type_list)) inexistent++;
 	test_case_trigger(assert_doesnt_contain_exact(inexistent, "a"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact 2");
 	test_case_trigger(assert_doesnt_contain_exact("waahoo", 5), "__gma_test_trigger_messages__: assert_doesnt_contain_exact 3");
@@ -456,7 +457,7 @@ function __gma_test_trigger_messages__() {
 
 	//assert_doesnt_contain_exact_2d(got, content)
 	test_case_trigger(assert_doesnt_contain_exact_2d(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact_2d 1");
-	var inexistent = 0;
+	inexistent = 0;
 	while (ds_exists(inexistent, ds_type_grid)) inexistent++;
 	test_case_no_trigger(assert_doesnt_contain_exact_2d(arrayB, undefined), "__gma_test_trigger_messages__: assert_doesnt_contain_exact_2d 2");
 	test_case_no_trigger(assert_doesnt_contain_exact_2d(arrayB, 583), "__gma_test_trigger_messages__: assert_doesnt_contain_exact_2d 3");
