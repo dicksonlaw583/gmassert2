@@ -101,3 +101,115 @@ function assert_less_than_or_equal(got, expected, msg="Less than or equal assert
 		}
 	}
 }
+
+///@func assert_in_range(got, lower, upper, msg)
+///@param {Real,String,Array} got The actual received value for the assertion
+///@param {Real,String,Array} lower The lower bound of the range (inclusive)
+///@param {Real,String,Array} upper The upper bound of the range (inclusive)
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the gotten expression is within the inclusive range between lower and upper.
+function assert_in_range(got, lower, upper, msg="In-range assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check types
+	switch (typeof(lower)) {
+		case "number":
+		case "string":
+		case "array":
+		break;
+		default:
+			msg += " (invalid lower bound type)";
+			__gma_assert_error_raw__(msg, "A real value, string or array", __gma_debug_value__(lower));
+		exit;
+	}
+	if (typeof(lower) != typeof(upper)) {
+		switch (typeof(lower)) {
+			case "number":
+				__gma_assert_error__(msg + " (mismatched range types)", "A real value for the upper bound", __gma_debug_value__(upper));
+			break;
+			case "string":
+				__gma_assert_error__(msg + " (mismatched range types)", "A string for the upper bound", __gma_debug_value__(upper));
+			break;
+			case "array":
+				__gma_assert_error__(msg + " (mismatched range types)", "An array for the upper bound", __gma_debug_value__(upper));
+			break;
+			default:
+				msg += " (invalid lower bound type)";
+				__gma_assert_error_raw__(msg, "A real value, string or array", __gma_debug_value__(lower));
+			break;
+		}
+		exit;
+	}
+	//Check assertion
+	if (!(__gma_less_than_or_equal__(got, upper) && __gma_less_than_or_equal__(lower, got))) {
+		switch (typeof(lower)) {
+			case "number":
+				__gma_assert_error_raw__(msg, "A real value between " + __gma_debug_value__(lower) + " and " + __gma_debug_value__(upper), __gma_debug_value__(got));
+			break;
+			case "string":
+			__gma_assert_error_raw__(msg, "A string that lies between " + __gma_debug_value__(lower) + " and " + __gma_debug_value__(upper), __gma_debug_value__(got));
+				break;
+			case "array":
+				__gma_assert_error_raw__(msg, "An array with pairwise values all between " + __gma_debug_value__(lower) + " and " + __gma_debug_value__(upper), __gma_debug_value__(got));
+			break;
+			default:
+				__gma_assert_error_raw__(msg + " (unsupported type)", "A value comparable to " + __gma_debug_value__(lower) + " and " + __gma_debug_value__(upper), __gma_debug_value__(got));
+			break;
+		}
+	}
+}
+
+///@func assert_not_in_range(got, lower, upper, msg)
+///@param {Real,String,Array} got The actual received value for the assertion
+///@param {Real,String,Array} lower The lower bound of the range (inclusive)
+///@param {Real,String,Array} upper The upper bound of the range (inclusive)
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the gotten expression is not within the inclusive range between lower and upper.
+function assert_not_in_range(got, lower, upper, msg="Out-of-range assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check types
+	switch (typeof(lower)) {
+		case "number":
+		case "string":
+		case "array":
+		break;
+		default:
+			msg += " (invalid lower bound type)";
+			__gma_assert_error_raw__(msg, "A real value, string or array", __gma_debug_value__(lower));
+		exit;
+	}
+	if (typeof(lower) != typeof(upper)) {
+		switch (typeof(lower)) {
+			case "number":
+				__gma_assert_error__(msg + " (mismatched range types)", "A real value for the upper bound", __gma_debug_value__(upper));
+			break;
+			case "string":
+				__gma_assert_error__(msg + " (mismatched range types)", "A string for the upper bound", __gma_debug_value__(upper));
+			break;
+			case "array":
+				__gma_assert_error__(msg + " (mismatched range types)", "An array for the upper bound", __gma_debug_value__(upper));
+			break;
+			default:
+				msg += " (invalid lower bound type)";
+				__gma_assert_error_raw__(msg, "A real value, string or array", __gma_debug_value__(lower));
+			break;
+		}
+		exit;
+	}
+	//Check assertion
+	if (__gma_less_than_or_equal__(got, upper) && __gma_less_than_or_equal__(lower, got)) {
+		switch (typeof(lower)) {
+			case "number":
+				__gma_assert_error_raw__(msg, "A real value not between " + __gma_debug_value__(lower) + " and " + __gma_debug_value__(upper), __gma_debug_value__(got));
+			break;
+			case "string":
+				__gma_assert_error_raw__(msg, "A string that does not lie between " + __gma_debug_value__(lower) + " and " + __gma_debug_value__(upper), __gma_debug_value__(got));
+			break;
+			case "array":
+				__gma_assert_error_raw__(msg, "An array with pairwise values all not between " + __gma_debug_value__(lower) + " and " + __gma_debug_value__(upper), __gma_debug_value__(got));
+			break;
+			default:
+				__gma_assert_error_raw__(msg + " (unsupported type)", "A value comparable to " + __gma_debug_value__(lower) + " and " + __gma_debug_value__(upper), __gma_debug_value__(got));
+			break;
+		}
+	}
+}
