@@ -20,10 +20,6 @@
   "installdir": "",
   "files": [
     {"resourceType":"GMExtensionFile","resourceVersion":"1.0","name":"","filename":"GMAssert.gml","origname":"extensions\\GMAssert.gml","init":"","final":"","kind":2,"uncompress":false,"functions":[
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_greater_than","externalName":"assert_greater_than","kind":2,"help":"assert_greater_than(got, expected, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_less_than","externalName":"assert_less_than","kind":2,"help":"assert_less_than(got, expected, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_greater_than_or_equal","externalName":"assert_greater_than_or_equal","kind":2,"help":"assert_greater_than_or_equal(got, expected, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_less_than_or_equal","externalName":"assert_less_than_or_equal","kind":2,"help":"assert_less_than_or_equal(got, expected, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
         {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_is_string","externalName":"assert_is_string","kind":2,"help":"assert_is_string(got, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
         {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_is_real","externalName":"assert_is_real","kind":2,"help":"assert_is_real(got, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
         {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_is_array","externalName":"assert_is_array","kind":2,"help":"assert_is_array(got, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
