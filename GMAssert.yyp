@@ -6,6 +6,7 @@
     {"id":{"name":"__gma_test_trigger_messages_23__","path":"scripts/__gma_test_trigger_messages_23__/__gma_test_trigger_messages_23__.yy",},"order":11,},
     {"id":{"name":"__GMA_SETTINGS__","path":"scripts/__GMA_SETTINGS__/__GMA_SETTINGS__.yy",},"order":1,},
     {"id":{"name":"__GMA_BREAKPOINT__","path":"scripts/__GMA_BREAKPOINT__/__GMA_BREAKPOINT__.yy",},"order":0,},
+    {"id":{"name":"GMAssert_Typecheck","path":"scripts/GMAssert_Typecheck/GMAssert_Typecheck.yy",},"order":6,},
     {"id":{"name":"test_case","path":"scripts/test_case/test_case.yy",},"order":0,},
     {"id":{"name":"test_case_no_trigger","path":"scripts/test_case_no_trigger/test_case_no_trigger.yy",},"order":1,},
     {"id":{"name":"test_case_trigger","path":"scripts/test_case_trigger/test_case_trigger.yy",},"order":2,},
