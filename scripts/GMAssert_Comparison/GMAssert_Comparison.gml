@@ -1,6 +1,6 @@
 ///@func assert_greater_than(got, expected, msg)
-///@param {Real,String,Array} got The actual received value for the assertion
-///@param {Real,String,Array} expected The value expected for the assertion
+///@param {Any} got The actual received value for the assertion
+///@param {Any} expected The value expected for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is greater than the expected expression.
 function assert_greater_than(got, expected, msg="Greater than assertion failed!") {
@@ -25,8 +25,8 @@ function assert_greater_than(got, expected, msg="Greater than assertion failed!"
 }
 
 ///@func assert_less_than(got, expected, msg)
-///@param {Real,String,Array} got The actual received value for the assertion
-///@param {Real,String,Array} expected The value expected for the assertion
+///@param {Any} got The actual received value for the assertion
+///@param {Any} expected The value expected for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is less than the expected expression.
 function assert_less_than(got, expected, msg="Less than assertion failed!") {
@@ -51,8 +51,8 @@ function assert_less_than(got, expected, msg="Less than assertion failed!") {
 }
 
 ///@func assert_greater_than_or_equal(got, expected, msg)
-///@param {Real,String,Array} got The actual received value for the assertion
-///@param {Real,String,Array} expected The value expected for the assertion
+///@param {Any} got The actual received value for the assertion
+///@param {Any} expected The value expected for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is greater than or equal to the expected expression.
 function assert_greater_than_or_equal(got, expected, msg="Greater than or equal assertion failed!") {
@@ -77,8 +77,8 @@ function assert_greater_than_or_equal(got, expected, msg="Greater than or equal 
 }
 
 ///@func assert_less_than_or_equal(got, expected, msg)
-///@param {Real,String,Array} got The actual received value for the assertion
-///@param {Real,String,Array} expected The value expected for the assertion
+///@param {Any} got The actual received value for the assertion
+///@param {Any} expected The value expected for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is less than or equal to the expected expression.
 function assert_less_than_or_equal(got, expected, msg="Less than or equal assertion failed!") {
@@ -103,9 +103,9 @@ function assert_less_than_or_equal(got, expected, msg="Less than or equal assert
 }
 
 ///@func assert_in_range(got, lower, upper, msg)
-///@param {Real,String,Array} got The actual received value for the assertion
-///@param {Real,String,Array} lower The lower bound of the range (inclusive)
-///@param {Real,String,Array} upper The upper bound of the range (inclusive)
+///@param {Any} got The actual received value for the assertion
+///@param {Any} lower The lower bound of the range (inclusive)
+///@param {Any} upper The upper bound of the range (inclusive)
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is within the inclusive range between lower and upper.
 function assert_in_range(got, lower, upper, msg="In-range assertion failed!") {
@@ -159,9 +159,9 @@ function assert_in_range(got, lower, upper, msg="In-range assertion failed!") {
 }
 
 ///@func assert_not_in_range(got, lower, upper, msg)
-///@param {Real,String,Array} got The actual received value for the assertion
-///@param {Real,String,Array} lower The lower bound of the range (inclusive)
-///@param {Real,String,Array} upper The upper bound of the range (inclusive)
+///@param {Any} got The actual received value for the assertion
+///@param {Any} lower The lower bound of the range (inclusive)
+///@param {Any} upper The upper bound of the range (inclusive)
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is not within the inclusive range between lower and upper.
 function assert_not_in_range(got, lower, upper, msg="Out-of-range assertion failed!") {
