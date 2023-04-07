@@ -392,8 +392,8 @@ function __gma_equalish__(got, expected) {
 }
 
 ///@func __gma_greater_than__(got, expected)
-///@param {Any} got The actual received value for the assertion
-///@param {Any} expected The value expected for the assertion
+///@param {Real,String,Array,Struct} got The actual received value for the assertion
+///@param {Real,String,Array,Struct} expected The value expected for the assertion
 ///@return {Bool}
 ///@ignore
 ///@desc (INTERNAL: GMAssert 2) Return whether the received value is greater than the expected value.
@@ -449,8 +449,8 @@ function __gma_greater_than__(got, expected) {
 }
 
 ///@func __gma_less_than__(got, expected)
-///@param {Any} got The actual received value for the assertion
-///@param {Any} expected The value expected for the assertion
+///@param {Real,String,Array,Struct} got The actual received value for the assertion
+///@param {Real,String,Array,Struct} expected The value expected for the assertion
 ///@return {Bool}
 ///@ignore
 ///@desc (INTERNAL: GMAssert 2) Return whether the received value is less than the expected value.
@@ -506,8 +506,8 @@ function __gma_less_than__(got, expected) {
 }
 
 ///@func __gma_greater_than_or_equal__(got, expected)
-///@param {Any} got The actual received value for the assertion
-///@param {Any} expected The value expected for the assertion
+///@param {Real,String,Array,Struct} got The actual received value for the assertion
+///@param {Real,String,Array,Struct} expected The value expected for the assertion
 ///@return {Bool}
 ///@ignore
 ///@desc (INTERNAL: GMAssert 2) Return whether the received value is greater than or equal to the expected value.
@@ -563,8 +563,8 @@ function __gma_greater_than_or_equal__(got, expected) {
 }
 
 ///@func __gma_less_than_or_equal__(got, expected)
-///@param {Any} got The actual received value for the assertion
-///@param {Any} expected The value expected for the assertion
+///@param {Real,String,Array,Struct} got The actual received value for the assertion
+///@param {Real,String,Array,Struct} expected The value expected for the assertion
 ///@return {Bool}
 ///@ignore
 ///@desc (INTERNAL: GMAssert 2) Return whether the received value is less than or equal to the expected value.

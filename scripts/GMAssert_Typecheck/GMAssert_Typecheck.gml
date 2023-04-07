@@ -1,5 +1,5 @@
 ///@func assert_is_string(got, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {String} got The actual received value for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is a string.
 function assert_is_string(got, msg="String type assertion failed!") {
@@ -11,7 +11,7 @@ function assert_is_string(got, msg="String type assertion failed!") {
 }
 
 ///@func assert_is_real(got, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Real} got The actual received value for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is a real number.
 function assert_is_real(got, msg="Real type assertion failed!") {
@@ -23,7 +23,7 @@ function assert_is_real(got, msg="Real type assertion failed!") {
 }
 
 ///@func assert_is_array(got, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Array} got The actual received value for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is an array.
 function assert_is_array(got, msg="Array type assertion failed!") {
@@ -47,7 +47,7 @@ function assert_is_defined(got, msg="Defined type assertion failed!") {
 }
 
 ///@func assert_is_undefined(got, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Undefined} got The actual received value for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc  
 function assert_is_undefined(got, msg="Undefined type assertion failed!") {
@@ -95,7 +95,7 @@ function assert_isnt_array(got, msg="Non-array type assertion failed!") {
 }
 
 ///@func assert_isnt_defined(got, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Undefined} got The actual received value for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is undefined.
 function assert_isnt_defined(got, msg="Undefined type assertion failed!") {
@@ -119,7 +119,7 @@ function assert_isnt_undefined(got, msg="Defined type assertion failed!") {
 }
 
 ///@func assert_is_struct(got, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Struct} got The actual received value for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is a struct.
 function assert_is_struct(got, msg="Struct type assertion failed!") {
@@ -131,7 +131,7 @@ function assert_is_struct(got, msg="Struct type assertion failed!") {
 }
 
 ///@func assert_is_instance_of(got, typeName, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Struct} got The actual received value for the assertion
 ///@param {String} typeName The type that the given value should have
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the given value has the given type.
@@ -144,7 +144,7 @@ function assert_is_instance_of(got, typeName, msg="Instance-of assertion failed!
 }
 
 ///@func assert_is_method(got, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Function} got The actual received value for the assertion
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten expression is a method.
 function assert_is_method(got, msg="Function type assertion failed!") {

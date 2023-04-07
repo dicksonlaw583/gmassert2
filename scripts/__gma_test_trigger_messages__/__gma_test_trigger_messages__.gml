@@ -233,6 +233,7 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_less_than_or_equal(arrayB, arrayB), "__gma_test_trigger_messages__: assert_less_than_or_equal 18");
 	test_case_no_trigger(assert_less_than_or_equal(structB, structB), "__gma_test_trigger_messages__: assert_less_than_or_equal 19");
 
+	///Feather disable GM1041
 	//assert_is_string(got)
 	test_case_trigger(assert_is_string(undefined), "__gma_test_trigger_messages__: is_string 1");
 	test_case_trigger(assert_is_string(3), "__gma_test_trigger_messages__: is_string 2");
@@ -302,6 +303,7 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_isnt_defined(""), "__gma_test_trigger_messages__: isnt_defined 3");
 	test_case_trigger(assert_isnt_defined(arrayA), "__gma_test_trigger_messages__: isnt_defined 4");
 	test_case_trigger(assert_isnt_defined(arrayB), "__gma_test_trigger_messages__: isnt_defined 5");
+	///Feather enable GM1041
 
 	//assert_in_range(got, lower, upper)
 	///Feather disable GM1041
