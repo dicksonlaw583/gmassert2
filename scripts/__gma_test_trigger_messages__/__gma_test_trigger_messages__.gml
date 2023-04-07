@@ -140,7 +140,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_not_equalish([{foo: 6, bar: 5}], [{foo: 6, bar: 5+GMASSERT_TOLERANCE/2}]), "__gma_test_trigger_messages__: assert_not_equalish 20");
 
 	//assert_greater_than(got, expected)
+	///Feather disable GM1041
 	test_case_trigger(assert_greater_than("NOT SUPPORTED", undefined), "__gma_test_trigger_messages__: assert_greater_than 1");
+	///Feather enable GM1041
 	test_case_no_trigger(assert_greater_than(5, 3), "__gma_test_trigger_messages__: assert_greater_than 2");
 	test_case_no_trigger(assert_greater_than("cat", "boogie"), "__gma_test_trigger_messages__: assert_greater_than 3");
 	test_case_no_trigger(assert_greater_than("DOGS", "DOG"), "__gma_test_trigger_messages__: assert_greater_than 4");
@@ -161,7 +163,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_greater_than(structB, structB), "__gma_test_trigger_messages__: assert_greater_than 19");
 
 	//assert_less_than(got, expected)
+	///Feather disable GM1041
 	test_case_trigger(assert_less_than("NOT SUPPORTED", undefined), "__gma_test_trigger_messages__: assert_less_than 1");
+	///Feather enable GM1041
 	test_case_trigger(assert_less_than(5, 3), "__gma_test_trigger_messages__: assert_less_than 2");
 	test_case_trigger(assert_less_than("cat", "boogie"), "__gma_test_trigger_messages__: assert_less_than 3");
 	test_case_trigger(assert_less_than("DOGS", "DOG"), "__gma_test_trigger_messages__: assert_less_than 4");
@@ -185,7 +189,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_less_than(structA, structB), "__gma_test_trigger_messages__: assert_less_than 22");
 
 	//assert_greater_than_or_equal(got, expected)
+	///Feather disable GM1041
 	test_case_trigger(assert_greater_than_or_equal("NOT SUPPORTED", undefined), "__gma_test_trigger_messages__: assert_greater_than_or_equal 1");
+	///Feather enable GM1041
 	test_case_no_trigger(assert_greater_than_or_equal(5, 3), "__gma_test_trigger_messages__: assert_greater_than_or_equal 2");
 	test_case_no_trigger(assert_greater_than_or_equal(5, 5), "__gma_test_trigger_messages__: assert_greater_than_or_equal 3");
 	test_case_no_trigger(assert_greater_than_or_equal("cat", "boogie"), "__gma_test_trigger_messages__: assert_greater_than_or_equal 4");
@@ -205,7 +211,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_greater_than_or_equal([[5, "cat"], ["DOGS", 907]], [[4, "doggie"], ["DOG", 907]]), "__gma_test_trigger_messages__: assert_greater_than_or_equal 18");
 
 	//assert_less_than_or_equal(got, expected)
+	///Feather disable GM1041
 	test_case_trigger(assert_less_than_or_equal("NOT SUPPORTED", undefined), "__gma_test_trigger_messages__: assert_less_than_or_equal 1");
+	///Feather enable GM1041
 	test_case_trigger(assert_less_than_or_equal(5, 3), "__gma_test_trigger_messages__: assert_less_than_or_equal 2");
 	test_case_trigger(assert_less_than_or_equal("cat", "boogie"), "__gma_test_trigger_messages__: assert_less_than_or_equal 3");
 	test_case_trigger(assert_less_than_or_equal("DOGS", "DOG"), "__gma_test_trigger_messages__: assert_less_than_or_equal 4");
@@ -296,7 +304,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_isnt_defined(arrayB), "__gma_test_trigger_messages__: isnt_defined 5");
 
 	//assert_in_range(got, lower, upper)
+	///Feather disable GM1041
 	test_case_trigger(assert_in_range(undefined, undefined, undefined), "__gma_test_trigger_messages__: assert_in_range 1");
+	///Feather enable GM1041
 	test_case_trigger(assert_in_range(3, 2, "5"), "__gma_test_trigger_messages__: assert_in_range 2");
 	test_case_trigger(assert_in_range(pi, 4, 5), "__gma_test_trigger_messages__: assert_in_range 3");
 	test_case_trigger(assert_in_range(pi, 2, 3), "__gma_test_trigger_messages__: assert_in_range 4");
@@ -316,9 +326,19 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_in_range([pi, "Bob"], [3, "Bob"], [4, "Caitlyn"]), "__gma_test_trigger_messages__: assert_in_range 18");
 	test_case_no_trigger(assert_in_range([pi, "Bob"], [pi, "Bob"], [4, "Caitlyn"]), "__gma_test_trigger_messages__: assert_in_range 19");
 	test_case_no_trigger(assert_in_range([pi, "Bob"], [pi, "Alice"], [4, "Bob"]), "__gma_test_trigger_messages__: assert_in_range 20");
+	test_case_trigger(assert_in_range({a: pi, b: "Bob"}, {a: 4, b: "Caitlyn" }, {a: 5, b: "David"}), "__gma_test_trigger_messages__: assert_in_range 21");
+	test_case_trigger(assert_in_range({a: pi, b: "Bob"}, {a: 2, b: "Alice" }, {a: 3, b: "Annie"}), "__gma_test_trigger_messages__: assert_in_range 22");
+	test_case_trigger(assert_in_range({a: pi, b: "Bob"}, {a: 2, b: "Alice" }, {a: 3, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_in_range 23");
+	test_case_trigger(assert_in_range({a: pi, b: "Bob"}, {a: 3, b: "Alice" }, {a: 4, b: "Annie"}), "__gma_test_trigger_messages__: assert_in_range 24");
+	test_case_no_trigger(assert_in_range({a: pi, b: "Bob"}, {a: 3, b: "Alice"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_in_range 25");
+	test_case_no_trigger(assert_in_range({a: pi, b: "Bob"}, {a: 3, b: "Bob"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_in_range 26");
+	test_case_no_trigger(assert_in_range({a: pi, b: "Bob"}, {a: pi, b: "Bob"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_in_range 27");
+	test_case_no_trigger(assert_in_range({a: pi, b: "Bob"}, {a: pi, b: "Alice"}, {a: 4, b: "Bob"}), "__gma_test_trigger_messages__: assert_in_range 28");
 
 	//assert_not_in_range(got, lower, upper)
+	///Feather disable GM1041
 	test_case_trigger(assert_not_in_range(undefined, undefined, undefined), "__gma_test_trigger_messages__: assert_not_in_range 1");
+	///Feather enable GM1041
 	test_case_trigger(assert_not_in_range(3, 2, "5"), "__gma_test_trigger_messages__: assert_not_in_range 2");
 	test_case_no_trigger(assert_not_in_range(pi, 4, 5), "__gma_test_trigger_messages__: assert_not_in_range 3");
 	test_case_no_trigger(assert_not_in_range(pi, 2, 3), "__gma_test_trigger_messages__: assert_not_in_range 4");
@@ -338,6 +358,14 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_not_in_range([pi, "Bob"], [3, "Bob"], [4, "Caitlyn"]), "__gma_test_trigger_messages__: assert_not_in_range 18");
 	test_case_trigger(assert_not_in_range([pi, "Bob"], [pi, "Bob"], [4, "Caitlyn"]), "__gma_test_trigger_messages__: assert_not_in_range 19");
 	test_case_trigger(assert_not_in_range([pi, "Bob"], [pi, "Alice"], [4, "Bob"]), "__gma_test_trigger_messages__: assert_not_in_range 20");
+	test_case_no_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: 4, b: "Caitlyn"}, {a: 5, b: "David"}), "__gma_test_trigger_messages__: assert_not_in_range 21");
+	test_case_no_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: 2, b: "Alice"}, {a: 3, b: "Annie"}), "__gma_test_trigger_messages__: assert_not_in_range 22");
+	test_case_no_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: 2, b: "Alice"}, {a: 3, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_not_in_range 23");
+	test_case_no_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: 3, b: "Alice"}, {a: 4, b: "Annie"}), "__gma_test_trigger_messages__: assert_not_in_range 24");
+	test_case_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: 3, b: "Alice"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_not_in_range 25");
+	test_case_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: 3, b: "Bob"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_not_in_range 26");
+	test_case_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: pi, b: "Bob"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_not_in_range 27");
+	test_case_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: pi, b: "Alice"}, {a: 4, b: "Bob"}), "__gma_test_trigger_messages__: assert_not_in_range 28");
 
 	//assert_contains(got, content)
 	test_case_trigger(assert_contains(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains 1");
