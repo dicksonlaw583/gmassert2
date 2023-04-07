@@ -1,5 +1,5 @@
 ///@func assert_contains(got, content, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {String,Array,Id.DsList} got The actual received value for the assertion
 ///@param {Any} content A value to look for in the received value
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten string, DS list or array contains a value equal to content.
@@ -60,7 +60,7 @@ function assert_contains(got, content, msg="Inclusion assertion failed!") {
 }
 
 ///@func assert_contains_exact(got, content, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {String,Array,Id.DsList} got The actual received value for the assertion
 ///@param {Any} content A value to look for in the received value
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten string, list or array contains a value exactly equal to content (as compared using ==).
@@ -121,7 +121,7 @@ function assert_contains_exact(got, content, msg="Exact inclusion assertion fail
 }
 
 ///@func assert_doesnt_contain(got, content, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {String,Array,Id.DsList} got The actual received value for the assertion
 ///@param {Any} content A value to look for in the received value
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten string, list or array does not contain a value equal to content.
@@ -182,7 +182,7 @@ function assert_doesnt_contain(got, content, msg="Exclusion assertion failed!") 
 }
 
 ///@func assert_doesnt_contain_exact(got, content, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {String,Array,Id.DsList} got The actual received value for the assertion
 ///@param {Any} content A value to look for in the received value
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten string, list or array does not contain a value exactly equal to content (as compared using ==).
@@ -243,7 +243,7 @@ function assert_doesnt_contain_exact(got, content, msg="Exact exclusion assertio
 }
 
 ///@func assert_contains_2d(got, content, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Array<Array<Any>>,Id.DsGrid} got The actual received value for the assertion
 ///@param {Any} content A value to look for in the received value
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten grid or 2D array contains a value equal to content.
@@ -299,7 +299,7 @@ function assert_contains_2d(got, content, msg="2D inclusion assertion failed!") 
 }
 
 ///@func assert_contains_exact_2d(got, content, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Array<Array<Any>>,Id.DsGrid} got The actual received value for the assertion
 ///@param {Any} content A value to look for in the received value
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten grid or 2D array contains a value equal to content, as compared using ==.
@@ -355,7 +355,7 @@ function assert_contains_exact_2d(got, content, msg="Exact 2D inclusion assertio
 }
 
 ///@func assert_doesnt_contain_2d(got, content, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Array<Array<Any>>,Id.DsGrid} got The actual received value for the assertion
 ///@param {Any} content A value to look for in the received value
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten grid or 2D array doesn't contain a value equal to content.
@@ -411,7 +411,7 @@ function assert_doesnt_contain_2d(got, content, msg="2D non-inclusion assertion 
 }
 
 ///@func assert_doesnt_contain_exact_2d(got, content, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Array<Array<Any>>,Id.DsGrid} got The actual received value for the assertion
 ///@param {Any} content A value to look for in the received value
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the gotten grid or 2D array doesn't contain a value equal to content, as compared using ==.
@@ -467,7 +467,7 @@ function assert_doesnt_contain_exact_2d(got, content, msg="Exact 2D non-inclusio
 }
 
 ///@func assert_doesnt_have_key(got, key, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Struct,Id.DsMap} got The actual received value for the assertion
 ///@param {String} key The key that got should not have
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the given struct or map does not have the given key.
@@ -492,8 +492,8 @@ function assert_doesnt_have_key(got, key, msg="No-key assertion failed!") {
 }
 
 ///@func assert_doesnt_have_method(got, methodName, msg)
-///@param {Any} got The actual received value for the assertion
-///@param methodName The method name that got should not have
+///@param {Struct} got The actual received value for the assertion
+///@param {String} methodName The method name that got should not have
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the given value does not have a method of the given name.
 function assert_doesnt_have_method(got, methodName, msg="No-method assertion failed!") {
@@ -505,7 +505,7 @@ function assert_doesnt_have_method(got, methodName, msg="No-method assertion fai
 }
 
 ///@func assert_has_key(got, key, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Struct,Id.DsMap} got The actual received value for the assertion
 ///@param {String} key The key that got should not have
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the given struct or map has the given key.
@@ -530,7 +530,7 @@ function assert_has_key(got, key, msg="Key assertion failed!") {
 }
 
 ///@func assert_has_method(got, methodName, msg)
-///@param {Any} got The actual received value for the assertion
+///@param {Struct} got The actual received value for the assertion
 ///@param {String} methodName The method name that got should not have
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the given value has a method of the given name.

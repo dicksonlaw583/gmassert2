@@ -37,16 +37,20 @@ function __gma_test_trigger_messages_23__() {
   test_case_no_trigger(assert_has_method(vector, "add"), "__gma_test_trigger_messages_23__: assert_has_method 3");
   test_case_trigger(assert_has_method(vector, "foo"), "__gma_test_trigger_messages_23__: assert_has_method 4");
   test_case_trigger(assert_has_method(583, "foo"), "__gma_test_trigger_messages_23__: assert_has_method 5");
+  ///Feather disable GM1041
   test_case_trigger(assert_has_method("boo", "foo"), "__gma_test_trigger_messages_23__: assert_has_method 6");
   test_case_trigger(assert_has_method(undefined, "foo"), "__gma_test_trigger_messages_23__: assert_has_method 7");
+  ///Feather enable GM1041
   // assert_doesnt_have_method(got, methodName, [msg])
   test_case_trigger(assert_doesnt_have_method(vector, "mag"), "__gma_test_trigger_messages_23__: assert_doesnt_have_method 1");
   test_case_trigger(assert_doesnt_have_method(vector, "norm"), "__gma_test_trigger_messages_23__: assert_doesnt_have_method 2");
   test_case_trigger(assert_doesnt_have_method(vector, "add"), "__gma_test_trigger_messages_23__: assert_doesnt_have_method 3");
   test_case_no_trigger(assert_doesnt_have_method(vector, "foo"), "__gma_test_trigger_messages_23__: assert_doesnt_have_method 4");
   test_case_trigger(assert_doesnt_have_method(583, "foo"), "__gma_test_trigger_messages_23__: assert_doesnt_have_method 5");
+  ///Feather disable GM1041
   test_case_trigger(assert_doesnt_have_method("boo", "foo"), "__gma_test_trigger_messages_23__: assert_doesnt_have_method 6");
   test_case_trigger(assert_doesnt_have_method(undefined, "foo"), "__gma_test_trigger_messages_23__: assert_doesnt_have_method 7");
+  ///Feather enable GM1041
   // assert_is_struct(got, [msg])
   test_case_trigger(assert_is_struct(583), "__gma_test_trigger_messages_23__: assert_is_struct 1");
   test_case_trigger(assert_is_struct("boo"), "__gma_test_trigger_messages_23__: assert_is_struct 2");
