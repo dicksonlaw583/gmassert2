@@ -19,14 +19,7 @@
   "androidProps": true,
   "installdir": "",
   "files": [
-    {"resourceType":"GMExtensionFile","resourceVersion":"1.0","name":"","filename":"GMAssert.gml","origname":"extensions\\GMAssert.gml","init":"","final":"","kind":2,"uncompress":false,"functions":[
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_doesnt_throw","externalName":"assert_doesnt_throw","kind":2,"help":"assert_doesnt_throw(func, thrown, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_doesnt_throw_instance_of","externalName":"assert_doesnt_throw_instance_of","kind":2,"help":"assert_doesnt_throw_instance_of(func, typeName, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_not_throwless","externalName":"assert_not_throwless","kind":2,"help":"assert_not_throwless(func, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_throwless","externalName":"assert_throwless","kind":2,"help":"assert_throwless(func, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_throws","externalName":"assert_throws","kind":2,"help":"assert_throws(func, thrown, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-        {"resourceType":"GMExtensionFunction","resourceVersion":"1.0","name":"assert_throws_instance_of","externalName":"assert_throws_instance_of","kind":2,"help":"assert_throws_instance_of(func, typeName, [msg])","hidden":false,"returnType":2,"argCount":-1,"args":[],"documentation":"",},
-      ],"constants":[],"ProxyFiles":[],"copyToTargets":9223372036854775807,"usesRunnerInterface":false,"order":[
+    {"resourceType":"GMExtensionFile","resourceVersion":"1.0","name":"","filename":"GMAssert.gml","origname":"extensions\\GMAssert.gml","init":"","final":"","kind":2,"uncompress":false,"functions":[],"constants":[],"ProxyFiles":[],"copyToTargets":9223372036854775807,"usesRunnerInterface":false,"order":[
         {"name":"assert_contains","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"assert_contains_exact","path":"extensions/GMAssert/GMAssert.yy",},
         {"name":"assert_doesnt_contain","path":"extensions/GMAssert/GMAssert.yy",},
