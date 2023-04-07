@@ -117,3 +117,77 @@ function assert_isnt_undefined(got, msg="Defined type assertion failed!") {
 		__gma_assert_error_raw__(msg, "Anything but undefined", __gma_debug_value__(got));
 	}
 }
+
+///@func assert_is_struct(got, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the gotten expression is a struct.
+function assert_is_struct(got, msg="Struct type assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion
+	if (!is_struct(got)) {
+		__gma_assert_error_raw__(msg, "Any struct", __gma_debug_value__(got));
+	}
+}
+
+///@func assert_is_instance_of(got, typeName, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} typeName The type that the given value should have
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the given value has the given type.
+function assert_is_instance_of(got, typeName, msg="Instance-of assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion
+	if (typeof(got) != typeName && (!is_struct(got) || instanceof(got) != typeName)) {
+		__gma_assert_error_raw__(msg, "Anything of type " + typeName, __gma_debug_value__(got));
+	}
+}
+
+///@func assert_is_method(got, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the gotten expression is a method.
+function assert_is_method(got, msg="Function type assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion
+	if (!is_method(got)) {
+		__gma_assert_error_raw__(msg, "Any method", __gma_debug_value__(got));
+	}
+}
+
+///@func assert_isnt_struct(got, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the gotten expression is not a struct.
+function assert_isnt_struct(got, msg="Non-struct type assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion
+	if (is_struct(got)) {
+		__gma_assert_error_raw__(msg, "Anything but a struct", __gma_debug_value__(got));
+	}
+}
+
+///@func assert_isnt_instance_of(got, typeName, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} typeName The type that the given value should not have
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the given value does not have the given type.
+function assert_isnt_instance_of(got, typeName, msg="Not-instance-of assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion
+	if (typeof(got) == typeName || (is_struct(got) && instanceof(got) == typeName)) {
+		__gma_assert_error_raw__(msg, "Anything not of type " + typeName, __gma_debug_value__(got));
+	}
+}
+
+///@func assert_isnt_method(got, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the gotten expression is not a method.
+function assert_isnt_method(got, msg="Non-function type assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion
+	if (is_method(got)) {
+		__gma_assert_error_raw__(msg, "Anything but a method", __gma_debug_value__(got));
+	}
+}
