@@ -465,3 +465,79 @@ function assert_doesnt_contain_exact_2d(got, content, msg="Exact 2D non-inclusio
 		break;
 	}
 }
+
+///@func assert_doesnt_have_key(got, key, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} key The key that got should not have
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the given struct or map does not have the given key.
+function assert_doesnt_have_key(got, key, msg="No-key assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion (struct form)
+	if (is_struct(got)) {
+		if (variable_struct_exists(got, key)) {
+			__gma_assert_error_raw__(msg, "A map or struct without key " + __gma_debug_value__(key), __gma_debug_struct_value__(got));
+		}
+	}
+	//Check assertion (map form)
+	else if (is_real(got) || is_int32(got) || is_int64(got)) {
+		if (!ds_exists(got, ds_type_map) || ds_map_exists(got, key)) {
+			__gma_assert_error_raw__(msg, "A map or struct without key " + __gma_debug_value__(key), __gma_debug_map_value__(got));
+		}
+	}
+	//Invalid
+	else {
+		__gma_assert_error_raw__(msg, "A map or struct without key " + __gma_debug_value__(key), __gma_debug_value__(got));
+	}
+}
+
+///@func assert_doesnt_have_method(got, methodName, msg)
+///@param {Any} got The actual received value for the assertion
+///@param methodName The method name that got should not have
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the given value does not have a method of the given name.
+function assert_doesnt_have_method(got, methodName, msg="No-method assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion
+	if (!is_struct(got) || (variable_struct_exists(got, methodName) && is_method(variable_struct_get(got, methodName)))) {
+		__gma_assert_error_raw__(msg, "A struct without a method named " + methodName, __gma_debug_struct_value__(got));
+	}
+}
+
+///@func assert_has_key(got, key, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} key The key that got should not have
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the given struct or map has the given key.
+function assert_has_key(got, key, msg="Key assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion (struct form)
+	if (is_struct(got)) {
+		if (!variable_struct_exists(got, key)) {
+			__gma_assert_error_raw__(msg, "A map or struct with key " + __gma_debug_value__(key), __gma_debug_struct_value__(got));
+		}
+	}
+	//Check assertion (map form)
+	else if (is_real(got) || is_int32(got) || is_int64(got)) {
+		if (!ds_exists(got, ds_type_map) || !ds_map_exists(got, key)) {
+			__gma_assert_error_raw__(msg, "A map or struct with key " + __gma_debug_value__(key), __gma_debug_map_value__(got));
+		}
+	}
+	//Invalid
+	else {
+		__gma_assert_error_raw__(msg, "A map or struct with key " + __gma_debug_value__(key), __gma_debug_value__(got));
+	}
+}
+
+///@func assert_has_method(got, methodName, msg)
+///@param {Any} got The actual received value for the assertion
+///@param {String} methodName The method name that got should not have
+///@param {String} msg (optional) A custom message to display when the assertion fails
+///@desc Assert that the given value has a method of the given name.
+function assert_has_method(got, methodName, msg="Method assertion failed!") {
+	if (!GMASSERT_ENABLED) exit;
+	//Check assertion
+	if (!is_struct(got) || !variable_struct_exists(got, methodName) || !is_method(variable_struct_get(got, methodName))) {
+		__gma_assert_error_raw__(msg, "A struct with a method named " + methodName, __gma_debug_struct_value__(got));
+	}
+}
