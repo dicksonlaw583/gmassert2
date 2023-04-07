@@ -15,7 +15,7 @@
     {"id":{"name":"gma_test_all","path":"scripts/gma_test_all/gma_test_all.yy",},"order":5,},
     {"id":{"name":"__gma_test_debug_type__","path":"scripts/__gma_test_debug_type__/__gma_test_debug_type__.yy",},"order":6,},
     {"id":{"name":"GMAssert_Comparison","path":"scripts/GMAssert_Comparison/GMAssert_Comparison.yy",},"order":4,},
-    {"id":{"name":"GMAssert_SetOperations","path":"scripts/GMAssert_SetOperations/GMAssert_SetOperations.yy",},"order":6,},
+    {"id":{"name":"GMAssert_Containment","path":"scripts/GMAssert_Containment/GMAssert_Containment.yy",},"order":6,},
     {"id":{"name":"__gma_test_debug_value_23__","path":"scripts/__gma_test_debug_value_23__/__gma_test_debug_value_23__.yy",},"order":10,},
     {"id":{"name":"__gma_test_debug_value__","path":"scripts/__gma_test_debug_value__/__gma_test_debug_value__.yy",},"order":7,},
     {"id":{"name":"__gma_test_trigger_messages__","path":"scripts/__gma_test_trigger_messages__/__gma_test_trigger_messages__.yy",},"order":8,},

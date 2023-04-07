@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "GMAssert_SetOperations",
+  "name": "GMAssert_Containment",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
