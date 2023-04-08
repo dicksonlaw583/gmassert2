@@ -1,7 +1,8 @@
-/// @description test_case(got, [expected], [msg])
-/// @param got
-/// @param [expected]
-/// @param [msg]
+///@func test_case(got, [expected], [msg])
+///@arg {Any} got The received value
+///@arg {Any} [expected] (optional) The expected value
+///@arg {String} [msg] The message to display on failure
+///@desc A basic GMAssert test case.
 function test_case() {
 	global.__gma_case_count__++;
   
@@ -25,7 +26,9 @@ function test_case() {
 	} else {
 		show_debug_message("Test case " + string(global.__gma_case_count__) + ": FAIL (" + msg + ")");
 		global.__gma_fail_count__++;
+		///Feather disable GM1041
 		ds_list_add(global.__gma_fail_list__, msg);
+		///Feather enable GM1041
 		global.__gma_test_time__ += current_time-global.__gma_test_time_start__; 
 		if (os_browser == browser_not_a_browser) {
 			show_error(msg, true);

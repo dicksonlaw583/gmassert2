@@ -1,12 +1,11 @@
 {
+  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
+  "name": "test_case_no_trigger",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
     "name": "GMAssert_test",
     "path": "folders/Libraries_test/GMAssert_test.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "test_case_no_trigger",
-  "tags": [],
-  "resourceType": "GMScript",
 }
