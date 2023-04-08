@@ -1,7 +1,7 @@
 ///@func test_fixture_grid(width, height, [...])
 ///@param {Real} width
 ///@param {Real} height
-///@return {Id.DsGrid<Any*>}
+///@return {Id.DsGrid}
 ///@desc Test fixture: Quickly generate a DS Grid inline.
 function test_fixture_grid(width, height) {
   if (argument_count < 2 || argument_count != 2+width*height) {
