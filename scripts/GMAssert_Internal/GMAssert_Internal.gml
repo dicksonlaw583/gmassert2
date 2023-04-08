@@ -625,15 +625,26 @@ function __gma_less_than_or_equal__(got, expected) {
 ///@param {Function} op A script taking the gotten value and the expected as arguments and returning true/false
 ///@param {Bool} invert Whether to invert the result returned by op
 ///@param {String} msg (optional) A custom message to display when the assertion fails
-///@param {Function} debug_got (optional) A custom function returning the shown value of the gotten value
-///@param {Function} debug_expected A custom function returning the shown value of the expected value
+///@param {Function,Undefined} debug_got (optional) A custom function returning the shown value of the gotten value
+///@param {Function,Undefined,String} debug_expected (optional) A fixed description string or a custom function returning the shown value of the expected value
 ///@desc (INTERNAL: GMAssert 2) Basis for defining custom assertions. See the Wiki for details.
 function assert_operation(got, expected, op, invert, msg="Assertion Failed!", debug_got=__gma_debug_value__, debug_expected=__gma_debug_value__) {
 	if (!GMASSERT_ENABLED) exit;
 	//Check assertion
 	if (!(invert ^^ script_execute(op, got, expected))) {
-		var debug_value_expected = script_execute(debug_expected, expected)
-		var debug_value_got = script_execute(debug_got, got);
+		var debug_value_expected, debug_value_got;
+		if (is_undefined(debug_expected)) {
+			debug_value_expected = __gma_debug_value__(expected);
+		} else if (is_string(debug_expected)) {
+			debug_value_expected = debug_expected;
+		} else {
+			debug_value_expected = script_execute(debug_expected, expected)
+		}
+		if (is_undefined(debug_got)) {
+			debug_value_got = __gma_debug_value__(got);
+		} else {
+			debug_value_got = script_execute(debug_got, got);
+		}
 		__gma_assert_error_raw__(msg, debug_value_expected, debug_value_got);
 	}
 }
