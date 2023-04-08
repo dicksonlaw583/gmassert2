@@ -6,14 +6,9 @@ function __gma_test_trigger_messages__() {
 		arrayB = [["a", "b"], ["c", "d"]],
 		structA = {a: 3, b: 5, c: 7},
 		structB = {a: {b: 5, c: 7, d: 9}},
-		list = ds_list_create(),
-		grid = ds_grid_create(2, 2),
+		list = test_fixture_list("a", "b", 1, 2),
+		grid = test_fixture_grid(2, 2, "A", "B", "C", "D"),
 		inexistent = 0;
-	ds_list_add(list, "a", "b", 1, 2);
-	grid[# 0, 0] = "A";
-	grid[# 1, 0] = "B";
-	grid[# 0, 1] = "C";
-	grid[# 1, 1] = "D";
 
 	#region assert(got)
 	test_case_no_trigger(assert(5 > 3), "__gma_test_trigger_messages__: assert 1");
