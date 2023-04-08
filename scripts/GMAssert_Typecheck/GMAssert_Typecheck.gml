@@ -131,7 +131,7 @@ function assert_is_struct(got, msg="Struct type assertion failed!") {
 }
 
 ///@func assert_is_instance_of(got, typeName, msg)
-///@param {Struct} got The actual received value for the assertion
+///@param {Any} got The actual received value for the assertion
 ///@param {String} typeName The type that the given value should have
 ///@param {String} msg (optional) A custom message to display when the assertion fails
 ///@desc Assert that the given value has the given type.

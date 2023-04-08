@@ -1,4 +1,7 @@
+///@func __gma_test_trigger_messages__()
+///@desc Test the triggering of assertions predating 2.3.
 function __gma_test_trigger_messages__() {
+	//Setup
 	var arrayA = [1, 2, 3],
 		arrayB = [["a", "b"], ["c", "d"]],
 		structA = {a: 3, b: 5, c: 7},
@@ -12,23 +15,26 @@ function __gma_test_trigger_messages__() {
 	grid[# 0, 1] = "C";
 	grid[# 1, 1] = "D";
 
-	//assert(got)
+	#region assert(got)
 	test_case_no_trigger(assert(5 > 3), "__gma_test_trigger_messages__: assert 1");
 	test_case_trigger(assert("waahoo" == "woohah"), "__gma_test_trigger_messages__: assert 2");
 	test_case_trigger(assert(undefined), "__gma_test_trigger_messages__: assert 3");
+	#endregion
 
-	//assert_fail(got)
+	#region assert_fail(got)
 	test_case_no_trigger(assert_fail("waahoo" == "woohah"), "__gma_test_trigger_messages__: assert_fail 1");
 	test_case_no_trigger(assert_fail(undefined), "__gma_test_trigger_messages__: assert_fail 2");
 	test_case_trigger(assert_fail(5 > 3), "__gma_test_trigger_messages__: assert_fail 3");
+	#endregion
 
-	//assert_operation(got, expected, op, invert, [msg], [debug_got], [debug_expected])
+	#region assert_operation(got, expected, op, invert, [msg], [debug_got], [debug_expected])
 	test_case_no_trigger(assert_operation(584, 583, test_fixture_greater_than, false), "__gma_test_trigger_messages__: assert_operation 1");
 	test_case_trigger(assert_operation(582, 583, test_fixture_greater_than, false), "__gma_test_trigger_messages__: assert_operation 2");
 	test_case_trigger(assert_operation(584, 583, test_fixture_greater_than, true), "__gma_test_trigger_messages__: assert_operation 3");
 	test_case_no_trigger(assert_operation(582, 583, test_fixture_greater_than, true), "__gma_test_trigger_messages__: assert_operation 4");
+	#endregion
 
-	//assert_equal(got, expected)
+	#region assert_equal(got, expected)
 	test_case_no_trigger(assert_equal(-4, -4), "__gma_test_trigger_messages__: assert_equal 1");
 	test_case_no_trigger(assert_equal("abc", "abc"), "__gma_test_trigger_messages__: assert_equal 2");
 	test_case_no_trigger(assert_equal(undefined, undefined), "__gma_test_trigger_messages__: assert_equal 3");
@@ -46,8 +52,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_equal({a: 3}, {a: 3, b: 4}), "__gma_test_trigger_messages__: assert_equal 15");
 	test_case_no_trigger(assert_equal({a: 3, b: 4}, {a: 3, b: 4}), "__gma_test_trigger_messages__: assert_equal 16");
 	test_case_no_trigger(assert_equal({a: 3, b: 4}, {b: 4, a: 3}), "__gma_test_trigger_messages__: assert_equal 17");
+	#endregion
 
-	//assert_not_equal(got, expected)
+	#region assert_not_equal(got, expected)
 	test_case_no_trigger(assert_not_equal(-4, 7), "__gma_test_trigger_messages__: assert_not_equal 1");
 	test_case_no_trigger(assert_not_equal("abc", ""), "__gma_test_trigger_messages__: assert_not_equal 2");
 	test_case_no_trigger(assert_not_equal(undefined, 72), "__gma_test_trigger_messages__: assert_not_equal 3");
@@ -64,8 +71,9 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_not_equal({a: 3}, {a: 3, b: 4}), "__gma_test_trigger_messages__: assert_not_equal 14");
 	test_case_trigger(assert_not_equal({a: 3, b: 4}, {a: 3, b: 4}), "__gma_test_trigger_messages__: assert_not_equal 15");
 	test_case_trigger(assert_not_equal({a: 3, b: 4}, {b: 4, a: 3}), "__gma_test_trigger_messages__: assert_not_equal 16");
+	#endregion
 
-	//assert_is(got, expected)
+	#region assert_is(got, expected)
 	test_case_no_trigger(assert_is(-4, -4), "__gma_test_trigger_messages__: assert_is 1");
 	test_case_no_trigger(assert_is("abc", "abc"), "__gma_test_trigger_messages__: assert_is 2");
 	test_case_no_trigger(assert_is(undefined, undefined), "__gma_test_trigger_messages__: assert_is 3");
@@ -79,8 +87,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_is(arrayA, arrayB), "__gma_test_trigger_messages__: assert_is 11");
 	test_case_trigger(assert_is([1, 2, 3], [1, 2, 3]), "__gma_test_trigger_messages__: assert_is 12");
 	test_case_trigger(assert_is({a: 3, b: 4}, {a: 3, b: 4}), "__gma_test_trigger_messages__: assert_is 13");
+	#endregion
 
-	//assert_isnt(got, expected)
+	#region assert_isnt(got, expected)
 	test_case_no_trigger(assert_isnt(-4, 7), "__gma_test_trigger_messages__: assert_isnt 1");
 	test_case_no_trigger(assert_isnt("abc", ""), "__gma_test_trigger_messages__: assert_isnt 2");
 	test_case_no_trigger(assert_isnt(undefined, 72), "__gma_test_trigger_messages__: assert_isnt 3");
@@ -95,8 +104,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_isnt(arrayB, arrayB), "__gma_test_trigger_messages__: assert_isnt 12");
 	test_case_trigger(assert_isnt(structA, structA), "__gma_test_trigger_messages__: assert_isnt 13");
 	test_case_trigger(assert_isnt(structB, structB), "__gma_test_trigger_messages__: assert_isnt 14");
+	#endregion
 
-	//assert_equalish(got, expected)
+	#region assert_equalish(got, expected)
 	test_case_no_trigger(assert_equalish(-4, -4), "__gma_test_trigger_messages__: assert_equalish 1");
 	test_case_no_trigger(assert_equalish("abc", "abc"), "__gma_test_trigger_messages__: assert_equalish 2");
 	test_case_no_trigger(assert_equalish(undefined, undefined), "__gma_test_trigger_messages__: assert_equalish 3");
@@ -116,8 +126,9 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_equalish([6, 5], [6, 5+GMASSERT_TOLERANCE/2]), "__gma_test_trigger_messages__: assert_equalish 17");
 	test_case_trigger(assert_equalish([{foo: 6, bar: 5}], [{foo:6, bar: 5.001}]), "__gma_test_trigger_messages__: assert_equalish 18");
 	test_case_no_trigger(assert_equalish([{foo: 6, bar: 5}], [{foo: 6, bar: 5+GMASSERT_TOLERANCE/2}]), "__gma_test_trigger_messages__: assert_equalish 19");
+	#endregion
 
-	//assert_not_equalish(got, expected)
+	#region assert_not_equalish(got, expected)
 	test_case_no_trigger(assert_not_equalish(-4, 7), "__gma_test_trigger_messages__: assert_not_equalish 1");
 	test_case_no_trigger(assert_not_equalish("abc", ""), "__gma_test_trigger_messages__: assert_not_equalish 2");
 	test_case_no_trigger(assert_not_equalish(undefined, 72), "__gma_test_trigger_messages__: assert_not_equalish 3");
@@ -138,8 +149,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_not_equalish([6, 5], [6, 5+GMASSERT_TOLERANCE/2]), "__gma_test_trigger_messages__: assert_not_equalish 18");
 	test_case_no_trigger(assert_not_equalish([{foo: 6, bar: 5}], [{foo: 6, bar: 5.001}]), "__gma_test_trigger_messages__: assert_not_equalish 19");
 	test_case_trigger(assert_not_equalish([{foo: 6, bar: 5}], [{foo: 6, bar: 5+GMASSERT_TOLERANCE/2}]), "__gma_test_trigger_messages__: assert_not_equalish 20");
+	#endregion
 
-	//assert_greater_than(got, expected)
+	#region assert_greater_than(got, expected)
 	///Feather disable GM1041
 	test_case_trigger(assert_greater_than("NOT SUPPORTED", undefined), "__gma_test_trigger_messages__: assert_greater_than 1");
 	///Feather enable GM1041
@@ -161,8 +173,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_greater_than([[5, "cat"], ["DOGS", 907]], [[4, "boogie"], ["DOG", 907]]), "__gma_test_trigger_messages__: assert_greater_than 17");
 	test_case_trigger(assert_greater_than(arrayB, arrayB), "__gma_test_trigger_messages__: assert_greater_than 18");
 	test_case_trigger(assert_greater_than(structB, structB), "__gma_test_trigger_messages__: assert_greater_than 19");
+	#endregion
 
-	//assert_less_than(got, expected)
+	#region assert_less_than(got, expected)
 	///Feather disable GM1041
 	test_case_trigger(assert_less_than("NOT SUPPORTED", undefined), "__gma_test_trigger_messages__: assert_less_than 1");
 	///Feather enable GM1041
@@ -187,8 +200,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_less_than([[5, "cat"], ["DOGS", 907]], [[4, "boogie"], ["DOG", 907]]), "__gma_test_trigger_messages__: assert_less_than 20");
 	test_case_trigger(assert_less_than(arrayB, arrayB), "__gma_test_trigger_messages__: assert_less_than 21");
 	test_case_trigger(assert_less_than(structA, structB), "__gma_test_trigger_messages__: assert_less_than 22");
+	#endregion
 
-	//assert_greater_than_or_equal(got, expected)
+	#region assert_greater_than_or_equal(got, expected)
 	///Feather disable GM1041
 	test_case_trigger(assert_greater_than_or_equal("NOT SUPPORTED", undefined), "__gma_test_trigger_messages__: assert_greater_than_or_equal 1");
 	///Feather enable GM1041
@@ -209,8 +223,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_greater_than_or_equal([5, "cat", "DOGS"], [4, "cats", "DOG"]), "__gma_test_trigger_messages__: assert_greater_than_or_equal 16");
 	test_case_trigger(assert_greater_than_or_equal({foo: 5, bar: "cat", baz: "DOGS"}, {foo: 4, bar: "cats", baz: "DOG"}), "__gma_test_trigger_messages__: assert_greater_than_or_equal 17");
 	test_case_trigger(assert_greater_than_or_equal([[5, "cat"], ["DOGS", 907]], [[4, "doggie"], ["DOG", 907]]), "__gma_test_trigger_messages__: assert_greater_than_or_equal 18");
+	#endregion
 
-	//assert_less_than_or_equal(got, expected)
+	#region assert_less_than_or_equal(got, expected)
 	///Feather disable GM1041
 	test_case_trigger(assert_less_than_or_equal("NOT SUPPORTED", undefined), "__gma_test_trigger_messages__: assert_less_than_or_equal 1");
 	///Feather enable GM1041
@@ -232,80 +247,93 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_less_than_or_equal([[2, "boogie"], ["DOG", 907]], [[5, "cat"], ["DOGS", 907]]), "__gma_test_trigger_messages__: assert_less_than_or_equal 17");
 	test_case_no_trigger(assert_less_than_or_equal(arrayB, arrayB), "__gma_test_trigger_messages__: assert_less_than_or_equal 18");
 	test_case_no_trigger(assert_less_than_or_equal(structB, structB), "__gma_test_trigger_messages__: assert_less_than_or_equal 19");
+	#endregion
 
 	///Feather disable GM1041
-	//assert_is_string(got)
+	
+	#region assert_is_string(got)
 	test_case_trigger(assert_is_string(undefined), "__gma_test_trigger_messages__: is_string 1");
 	test_case_trigger(assert_is_string(3), "__gma_test_trigger_messages__: is_string 2");
 	test_case_no_trigger(assert_is_string(""), "__gma_test_trigger_messages__: is_string 3");
 	test_case_trigger(assert_is_string(arrayA), "__gma_test_trigger_messages__: is_string 4");
 	test_case_trigger(assert_is_string(arrayB), "__gma_test_trigger_messages__: is_string 5");
+	#endregion
 
-	//assert_isnt_string(got)
+	#region assert_isnt_string(got)
 	test_case_no_trigger(assert_isnt_string(undefined), "__gma_test_trigger_messages__: isnt_string 1");
 	test_case_no_trigger(assert_isnt_string(3), "__gma_test_trigger_messages__: isnt_string 2");
 	test_case_trigger(assert_isnt_string(""), "__gma_test_trigger_messages__: isnt_string 3");
 	test_case_no_trigger(assert_isnt_string(arrayA), "__gma_test_trigger_messages__: isnt_string 4");
 	test_case_no_trigger(assert_isnt_string(arrayB), "__gma_test_trigger_messages__: isnt_string 5");
+	#endregion
 
-	//assert_is_real(got)
+	#region assert_is_real(got)
 	test_case_trigger(assert_is_real(undefined), "__gma_test_trigger_messages__: is_real 1");
 	test_case_no_trigger(assert_is_real(3), "__gma_test_trigger_messages__: is_real 2");
 	test_case_trigger(assert_is_real(""), "__gma_test_trigger_messages__: is_real 3");
 	test_case_trigger(assert_is_real(arrayA), "__gma_test_trigger_messages__: is_real 4");
 	test_case_trigger(assert_is_real(arrayB), "__gma_test_trigger_messages__: is_real 5");
+	#endregion
 
-	//assert_isn_real(got)
+	#region assert_isn_real(got)
 	test_case_no_trigger(assert_isnt_real(undefined), "__gma_test_trigger_messages__: isnt_real 1");
 	test_case_trigger(assert_isnt_real(3), "__gma_test_trigger_messages__: isnt_real 2");
 	test_case_no_trigger(assert_isnt_real(""), "__gma_test_trigger_messages__: isnt_real 3");
 	test_case_no_trigger(assert_isnt_real(arrayA), "__gma_test_trigger_messages__: isnt_real 4");
 	test_case_no_trigger(assert_isnt_real(arrayB), "__gma_test_trigger_messages__: isnt_real 5");
+	#endregion
 
-	//assert_is_array(got)
+	#region assert_is_array(got)
 	test_case_trigger(assert_is_array(undefined), "__gma_test_trigger_messages__: is_array 1");
 	test_case_trigger(assert_is_array(3), "__gma_test_trigger_messages__: is_array 2");
 	test_case_trigger(assert_is_array(""), "__gma_test_trigger_messages__: is_array 3");
 	test_case_no_trigger(assert_is_array(arrayA), "__gma_test_trigger_messages__: is_array 4");
 	test_case_no_trigger(assert_is_array(arrayB), "__gma_test_trigger_messages__: is_array 5");
+	#endregion
 
-	//assert_isn_array(got)
+	#region assert_isn_array(got)
 	test_case_no_trigger(assert_isnt_array(undefined), "__gma_test_trigger_messages__: isnt_array 1");
 	test_case_no_trigger(assert_isnt_array(3), "__gma_test_trigger_messages__: isnt_array 2");
 	test_case_no_trigger(assert_isnt_array(""), "__gma_test_trigger_messages__: isnt_array 3");
 	test_case_trigger(assert_isnt_array(arrayA), "__gma_test_trigger_messages__: isnt_array 4");
 	test_case_trigger(assert_isnt_array(arrayB), "__gma_test_trigger_messages__: isnt_array 5");
+	#endregion
 
-	//assert_is_undefined(got)
+	#region assert_is_undefined(got)
 	test_case_no_trigger(assert_is_undefined(undefined), "__gma_test_trigger_messages__: is_undefined 1");
 	test_case_trigger(assert_is_undefined(3), "__gma_test_trigger_messages__: is_undefined 2");
 	test_case_trigger(assert_is_undefined(""), "__gma_test_trigger_messages__: is_undefined 3");
 	test_case_trigger(assert_is_undefined(arrayA), "__gma_test_trigger_messages__: is_undefined 4");
 	test_case_trigger(assert_is_undefined(arrayB), "__gma_test_trigger_messages__: is_undefined 5");
+	#endregion
 
-	//assert_is_defined(got)
+	#region assert_is_defined(got)
 	test_case_trigger(assert_is_defined(undefined), "__gma_test_trigger_messages__: is_defined 1");
 	test_case_no_trigger(assert_is_defined(3), "__gma_test_trigger_messages__: is_defined 2");
 	test_case_no_trigger(assert_is_defined(""), "__gma_test_trigger_messages__: is_defined 3");
 	test_case_no_trigger(assert_is_defined(arrayA), "__gma_test_trigger_messages__: is_defined 4");
 	test_case_no_trigger(assert_is_defined(arrayB), "__gma_test_trigger_messages__: is_defined 5");
+	#endregion
 
-	//assert_isnt_undefined(got)
+	#region assert_isnt_undefined(got)
 	test_case_trigger(assert_isnt_undefined(undefined), "__gma_test_trigger_messages__: isnt_undefined 1");
 	test_case_no_trigger(assert_isnt_undefined(3), "__gma_test_trigger_messages__: isnt_undefined 2");
 	test_case_no_trigger(assert_isnt_undefined(""), "__gma_test_trigger_messages__: isnt_undefined 3");
 	test_case_no_trigger(assert_isnt_undefined(arrayA), "__gma_test_trigger_messages__: isnt_undefined 4");
 	test_case_no_trigger(assert_isnt_undefined(arrayB), "__gma_test_trigger_messages__: isnt_undefined 5");
+	#endregion
 
-	//assert_isnt_defined(got)
+	#region assert_isnt_defined(got)
 	test_case_no_trigger(assert_isnt_defined(undefined), "__gma_test_trigger_messages__: isnt_defined 1");
 	test_case_trigger(assert_isnt_defined(3), "__gma_test_trigger_messages__: isnt_defined 2");
 	test_case_trigger(assert_isnt_defined(""), "__gma_test_trigger_messages__: isnt_defined 3");
 	test_case_trigger(assert_isnt_defined(arrayA), "__gma_test_trigger_messages__: isnt_defined 4");
 	test_case_trigger(assert_isnt_defined(arrayB), "__gma_test_trigger_messages__: isnt_defined 5");
+	#endregion
+	
 	///Feather enable GM1041
-
-	//assert_in_range(got, lower, upper)
+	
+	#region assert_in_range(got, lower, upper)
 	///Feather disable GM1041
 	test_case_trigger(assert_in_range(undefined, undefined, undefined), "__gma_test_trigger_messages__: assert_in_range 1");
 	///Feather enable GM1041
@@ -336,8 +364,9 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_in_range({a: pi, b: "Bob"}, {a: 3, b: "Bob"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_in_range 26");
 	test_case_no_trigger(assert_in_range({a: pi, b: "Bob"}, {a: pi, b: "Bob"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_in_range 27");
 	test_case_no_trigger(assert_in_range({a: pi, b: "Bob"}, {a: pi, b: "Alice"}, {a: 4, b: "Bob"}), "__gma_test_trigger_messages__: assert_in_range 28");
+	#endregion
 
-	//assert_not_in_range(got, lower, upper)
+	#region assert_not_in_range(got, lower, upper)
 	///Feather disable GM1041
 	test_case_trigger(assert_not_in_range(undefined, undefined, undefined), "__gma_test_trigger_messages__: assert_not_in_range 1");
 	///Feather enable GM1041
@@ -368,8 +397,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: 3, b: "Bob"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_not_in_range 26");
 	test_case_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: pi, b: "Bob"}, {a: 4, b: "Caitlyn"}), "__gma_test_trigger_messages__: assert_not_in_range 27");
 	test_case_trigger(assert_not_in_range({a: pi, b: "Bob"}, {a: pi, b: "Alice"}, {a: 4, b: "Bob"}), "__gma_test_trigger_messages__: assert_not_in_range 28");
+	#endregion
 
-	//assert_contains(got, content)
+	#region assert_contains(got, content)
 	test_case_trigger(assert_contains(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains 1");
 	inexistent = ds_list_create();
 	ds_list_destroy(inexistent);
@@ -385,8 +415,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_contains(list, arrayA), "__gma_test_trigger_messages__: assert_contains 11");
 	test_case_no_trigger(assert_contains(list, "b"), "__gma_test_trigger_messages__: assert_contains 12");
 	test_case_no_trigger(assert_contains(list, 2), "__gma_test_trigger_messages__: assert_contains 13");
+	#endregion
 
-	//assert_contains_2d(got, content)
+	#region assert_contains_2d(got, content)
 	test_case_trigger(assert_contains_2d(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains2d 1");
 	inexistent = ds_grid_create(1, 1);
 	ds_grid_destroy(inexistent);
@@ -401,8 +432,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_contains_2d(grid, "superwaahoo"), "__gma_test_trigger_messages__: assert_contains2d 10");
 	test_case_no_trigger(assert_contains_2d(grid, "A"), "__gma_test_trigger_messages__: assert_contains2d 11");
 	test_case_no_trigger(assert_contains_2d(grid, "D"), "__gma_test_trigger_messages__: assert_contains2d 12");
+	#endregion
 
-	//assert_doesnt_contain(got, content)
+	#region assert_doesnt_contain(got, content)
 	test_case_trigger(assert_doesnt_contain(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain 1");
 	inexistent = ds_list_create();
 	ds_list_destroy(inexistent);
@@ -418,8 +450,9 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_doesnt_contain(list, arrayA), "__gma_test_trigger_messages__: assert_doesnt_contain 11");
 	test_case_trigger(assert_doesnt_contain(list, "b"), "__gma_test_trigger_messages__: assert_doesnt_contain 12");
 	test_case_trigger(assert_doesnt_contain(list, 2), "__gma_test_trigger_messages__: assert_doesnt_contain 13");
+	#endregion
 
-	//assert_doesnt_contain_2d(got, content)
+	#region assert_doesnt_contain_2d(got, content)
 	test_case_trigger(assert_doesnt_contain_2d(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain_2d 1");
 	inexistent = ds_grid_create(1, 1);
 	ds_grid_destroy(inexistent);
@@ -434,8 +467,9 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_doesnt_contain_2d(grid, "superwaahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain_2d 10");
 	test_case_trigger(assert_doesnt_contain_2d(grid, "A"), "__gma_test_trigger_messages__: assert_doesnt_contain_2d 11");
 	test_case_trigger(assert_doesnt_contain_2d(grid, "D"), "__gma_test_trigger_messages__: assert_doesnt_contain_2d 12");
+	#endregion
 
-	//assert_contains_exact(got, content)
+	#region assert_contains_exact(got, content)
 	test_case_trigger(assert_contains_exact(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains_exact 1");
 	inexistent = ds_list_create();
 	ds_list_destroy(inexistent);
@@ -451,8 +485,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_contains_exact(list, arrayA), "__gma_test_trigger_messages__: assert_contains_exact 11");
 	test_case_no_trigger(assert_contains_exact(list, "b"), "__gma_test_trigger_messages__: assert_contains_exact 12");
 	test_case_no_trigger(assert_contains_exact(list, 2), "__gma_test_trigger_messages__: assert_contains_exact 13");
+	#endregion
 
-	//assert_contains_exact_2d(got, content)
+	#region assert_contains_exact_2d(got, content)
 	test_case_trigger(assert_contains_exact_2d(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_contains_exact_2d 1");
 	inexistent = ds_grid_create(1, 1);
 	ds_grid_destroy(inexistent);
@@ -467,8 +502,9 @@ function __gma_test_trigger_messages__() {
 	test_case_trigger(assert_contains_exact_2d(grid, "superwaahoo"), "__gma_test_trigger_messages__: assert_contains_exact_2d 10");
 	test_case_no_trigger(assert_contains_exact_2d(grid, "A"), "__gma_test_trigger_messages__: assert_contains_exact_2d 11");
 	test_case_no_trigger(assert_contains_exact_2d(grid, "D"), "__gma_test_trigger_messages__: assert_contains_exact_2d 12");
+	#endregion
 
-	//assert_doesnt_contain_exact(got, content)
+	#region assert_doesnt_contain_exact(got, content)
 	test_case_trigger(assert_doesnt_contain_exact(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact 1");
 	inexistent = ds_list_create();
 	ds_list_destroy(inexistent);
@@ -484,8 +520,9 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_doesnt_contain_exact(list, arrayA), "__gma_test_trigger_messages__: assert_doesnt_contain_exact 11");
 	test_case_trigger(assert_doesnt_contain_exact(list, "b"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact 12");
 	test_case_trigger(assert_doesnt_contain_exact(list, 2), "__gma_test_trigger_messages__: assert_doesnt_contain_exact 13");
+	#endregion
 
-	//assert_doesnt_contain_exact_2d(got, content)
+	#region assert_doesnt_contain_exact_2d(got, content)
 	test_case_trigger(assert_doesnt_contain_exact_2d(undefined, "waahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact_2d 1");
 	inexistent = ds_grid_create(1, 1);
 	ds_grid_destroy(inexistent);
@@ -500,6 +537,7 @@ function __gma_test_trigger_messages__() {
 	test_case_no_trigger(assert_doesnt_contain_exact_2d(grid, "superwaahoo"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact_2d 10");
 	test_case_trigger(assert_doesnt_contain_exact_2d(grid, "A"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact_2d 11");
 	test_case_trigger(assert_doesnt_contain_exact_2d(grid, "B"), "__gma_test_trigger_messages__: assert_doesnt_contain_exact_2d 12");
+	#endregion
 
 	//CLEANUP
 	ds_list_destroy(list);

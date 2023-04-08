@@ -1,4 +1,5 @@
-/// @description gma_test_all()
+///@func gma_test_all()
+///@desc Test all GMAssert functionality.
 function gma_test_all() {
 	//Initialize tracking variables
 	global.__gma_case_count__ = 0;
